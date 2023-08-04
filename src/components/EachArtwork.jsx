@@ -11,19 +11,28 @@ function EachArtwork({ artwork }) {
             .catch(error => console.error(error.message))
     }, [artwork.api_link])
 
+    const tooltip = event => {
+        let x = event.clientX
+        let y = event.clientY
+        document.getElementById("tooltip").style.left = x + "px"
+        document.getElementById("tooltip").style.top = y + "px"
+    }
+
     if (!eachArtwork) {
         return <p>Loading artwork details...</p>
     }
 
     return (
-        <article className="each-artwork">
+        <article className="each-artwork" onMouseMove={tooltip}>
+            <div id="tooltip">
+                <p>{eachArtwork.title}</p>
+                <p>{eachArtwork.artist_title}</p>
+            </div>
             <img
                 className="artwork-img"
                 src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}
                 alt={eachArtwork.thumbnail.alt_text}
             />
-            <p>{eachArtwork.title}</p>
-            <p>Artist: {eachArtwork.artist_display}</p>
         </article>
     )
 }

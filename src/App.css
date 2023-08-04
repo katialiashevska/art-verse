@@ -1,16 +1,44 @@
 #root {
-    max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
     text-align: center;
 }
 
+#navbar {
+    position: fixed;
+    left: 50%;
+    top: 40px;
+    transform: translate(-50%);
+}
+
 #all-artworks {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    margin-top: 110px;
+    column-count: 3;
+    column-gap: 32px;
+}
+
+.each-artwork {
+    width: 100%;
+    margin-bottom: 32px;
+    break-inside: avoid-column;
+    position: relative;
 }
 
 .artwork-img {
-    height: 200px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+#tooltip {
+    opacity: 0;
+    position: absolute;
+    background-color: black;
+    color: white;
+    top: 0;
+    left: 0;
+}
+
+.each-artwork:hover #tooltip {
+    opacity: 1;
 }
