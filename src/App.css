@@ -4,3 +4,13 @@
     padding: 2rem;
     text-align: center;
 }
+
+#all-artworks {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.artwork-img {
+    height: 200px;
+}
