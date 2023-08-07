@@ -48,14 +48,14 @@ function EachArtwork({ artwork }) {
         eachArtwork && (
             <article className="each-artwork">
                 <div className="tooltip">
-                    <p className="artwork-title">{eachArtwork.title}</p>
-                    <p className="artwork-artist">
-                        {eachArtwork.artist_title}, <span className="artwork-date">{eachArtwork.date_display}</span>
+                    <p className="each-artwork-title">{eachArtwork.title}</p>
+                    <p className="each-artwork-artist">
+                        {eachArtwork.artist_title}, <span className="each-artwork-date">{eachArtwork.date_display}</span>
                     </p>
                 </div>
-                <div className="artwork-container">
+                <div className="each-artwork-container">
                     <img
-                        className="artwork-img"
+                        className="each-artwork-img"
                         src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}
                         alt={eachArtwork.thumbnail.alt_text}
                     />

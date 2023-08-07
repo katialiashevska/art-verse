@@ -20,14 +20,17 @@ function FavouritesPage() {
         <div>
             <h1>My favourites</h1>
             {favouriteArtworks.map(artwork => (
-                <article key={artwork.id} className="each-artwork">
-                    <img className="artwork-img" src={artwork.img} alt={artwork.alt_text} />
-                    <p className="artwork-title">
+                <article key={artwork.id} className="favourites-artwork">
+                    <hr />
+                    <div className="favourites-img-container">
+                        <img className="favourites-img" src={artwork.img} alt={artwork.alt_text} />
+                    </div>
+                    <p className="favourites-title">
                         {artwork.title}, {artwork.date}
                     </p>
-                    <p className="artwork-artist">{artwork.artist}</p>
-                    <p>{artwork.medium}</p>
-                    <p>{artwork.dimensions}</p>
+                    <p className="favourites-artist">{artwork.artist}</p>
+                    <p className="favourites-medium">{artwork.medium}</p>
+                    <p className="favourites-dimensions">{artwork.dimensions}</p>
                 </article>
             ))}
         </div>

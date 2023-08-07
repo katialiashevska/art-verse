@@ -67,25 +67,25 @@
     display: block;
 }
 
-.artwork-title {
+.each-artwork-title {
     font-size: 18px;
     font-weight: 500;
 }
 
-.artwork-artist {
+.each-artwork-artist {
     font-weight: 400;
     font-size: 16px;
 }
 
-.artwork-date {
+.each-artwork-date {
     font-weight: 300;
 }
 
-.artwork-container {
+.each-artwork-container {
     position: relative;
 }
 
-.artwork-img {
+.each-artwork-img {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -104,10 +104,22 @@
     display: none;
 }
 
-.artwork-container:hover .add-button {
+.each-artwork-container:hover .add-button {
     display: inline-flex;
 }
 
 .add-button:hover {
     background: #5d5fef;
+}
+
+.favourites-img-container {
+    width: 430px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.favourites-img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
 }
