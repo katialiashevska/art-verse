@@ -11,20 +11,13 @@ function EachArtwork({ artwork }) {
             .catch(error => console.error(error.message))
     }, [artwork.api_link])
 
-    const tooltip = event => {
-        let x = event.clientX
-        let y = event.clientY
-        document.getElementById("tooltip").style.left = x + "px"
-        document.getElementById("tooltip").style.top = y + "px"
-    }
-
     if (!eachArtwork) {
         return <p>Loading artwork details...</p>
     }
 
     return (
-        <article className="each-artwork" onMouseMove={tooltip}>
-            <div id="tooltip">
+        <article className="each-artwork">
+            <div className="tooltip">
                 <p>{eachArtwork.title}</p>
                 <p>{eachArtwork.artist_title}</p>
             </div>
