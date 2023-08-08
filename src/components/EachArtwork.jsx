@@ -1,19 +1,12 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import plus from "../assets/plus.svg"
+import ArtworkDetails from "./ArtworkDetails"
 
 function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)
-    let tooltip = document.querySelectorAll(".tooltip")
-
-    const tooltipMove = e => {
-        for (let i = tooltip.length; i--; ) {
-            tooltip[i].style.left = e.pageX + "px"
-            tooltip[i].style.top = e.pageY + "px"
-        }
-    }
-
-    document.addEventListener("mousemove", tooltipMove, false)
+    const [modalOpen, setModalOpen] = useState(false)
+    const tooltip = document.querySelectorAll(".tooltip")
 
     useEffect(() => {
         axios
@@ -22,15 +15,24 @@ function EachArtwork({ artwork }) {
             .catch(error => console.error(error.message))
     }, [artwork.api_link])
 
+    const openModal = () => {
+        setModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setModalOpen(false)
+    }
+
     const addToFavourites = () => {
         const newArtwork = {
+            id: eachArtwork.id,
             title: eachArtwork.title,
             artist: eachArtwork.artist_title,
             date: eachArtwork.date_display,
             medium: eachArtwork.medium_display,
             dimensions: eachArtwork.dimensions,
-            img: `https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`,
             alt_text: eachArtwork.thumbnail.alt_text,
+            img: `https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`,
         }
 
         axios
@@ -43,6 +45,23 @@ function EachArtwork({ artwork }) {
                 alert("Failed to add artwork to favorites.")
             })
     }
+
+    const handleTooltip = e => {
+        for (let i = 0; i <= tooltip.length; i++) {
+            const tooltipWidth = tooltip[i].offsetWidth
+            const pageWidth = window.innerWidth
+
+            let leftPosition = e.pageX + 15
+            if (leftPosition + tooltipWidth > pageWidth) {
+                leftPosition = e.pageX - tooltipWidth - 30
+            }
+
+            tooltip[i].style.left = leftPosition + "px"
+            tooltip[i].style.top = e.pageY + "px"
+        }
+    }
+
+    document.addEventListener("mousemove", handleTooltip, false)
 
     return (
         eachArtwork && (
@@ -59,11 +78,13 @@ function EachArtwork({ artwork }) {
                         className="each-artwork-img"
                         src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}
                         alt={eachArtwork.thumbnail.alt_text}
+                        onClick={openModal}
                     />
                     <button className="add-button" onClick={addToFavourites}>
                         <img src={plus} alt="Plus icon" />
                     </button>
                 </div>
+                {modalOpen && <ArtworkDetails artwork={eachArtwork} onClose={closeModal} />}
             </article>
         )
     )
