@@ -1,36 +1,75 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
-import EachArtwork from "../components/EachArtwork"
+import { Link } from "react-router-dom"
+import logo from "../assets/logo.svg"
+import arrow from "../assets/arrow.svg"
+
+const API_URL = "https://art-verse-backend.adaptable.app/favouriteArtworks"
 
 function FavouritesPage() {
     const [favouriteArtworks, setFavouriteArtworks] = useState(null)
 
     useEffect(() => {
         axios
-            .get("https://art-verse-backend.adaptable.app/favouriteArtworks")
+            .get(API_URL)
             .then(response => setFavouriteArtworks(response.data))
             .catch(error => console.error(error.message))
     }, [])
+
+    const deleteArtwork = artworkId => {
+        axios
+            .delete(`${API_URL}/${artworkId}`)
+            .then(() => {
+                setFavouriteArtworks(artworks =>
+                    artworks.filter(artwork => artwork.id !== artworkId)
+                )
+            })
+            .catch(error => console.error(error.message))
+    }
 
     if (!favouriteArtworks) {
         return <p>Loading favourite artworks...</p>
     }
 
     return (
-        <div>
-            <h1>My favourites</h1>
+        <div id="favourites">
+            <Link to="/">
+                <img id="logo" src={logo} alt="ArtVerse logo" />
+            </Link>
+            <div id="favourites-header">
+                <Link className="back-button" to="/">
+                    <img id="arrow" src={arrow} alt="Arrow icon" />
+                    Back
+                </Link>
+                <h1>My favourites</h1>
+            </div>
             {favouriteArtworks.map(artwork => (
-                <article key={artwork.id} className="favourites-artwork">
-                    <hr />
-                    <div className="favourites-img-container">
-                        <img className="favourites-img" src={artwork.img} alt={artwork.alt_text} />
+                <article key={artwork.id} className="favourites-artwork-container">
+                    <div className="favourites-flex">
+                        <div className="favourites-img-container">
+                            <img
+                                className="favourites-img"
+                                src={artwork.img}
+                                alt={artwork.alt_text}
+                            />
+                        </div>
+                        <div className="favourites-text-container">
+                            <div className="favourites-upper-text">
+                                <p className="favourites-artist">{artwork.artist}</p>
+                                <p className="favourites-title">
+                                    {artwork.title},{" "}
+                                    <span className="favourites-date">{artwork.date}</span>
+                                </p>
+                            </div>
+                            <div className="favourites-lower-text">
+                                <p className="favourites-medium">{artwork.medium}</p>
+                                <p className="favourites-dimensions">{artwork.dimensions}</p>
+                            </div>
+                        </div>
                     </div>
-                    <p className="favourites-title">
-                        {artwork.title}, {artwork.date}
-                    </p>
-                    <p className="favourites-artist">{artwork.artist}</p>
-                    <p className="favourites-medium">{artwork.medium}</p>
-                    <p className="favourites-dimensions">{artwork.dimensions}</p>
+                    <button className="remove-button" onClick={() => deleteArtwork(artwork.id)}>
+                        Remove
+                    </button>
                 </article>
             ))}
         </div>

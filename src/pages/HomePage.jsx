@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import Navbar from "../components/Navbar"
 import EachArtwork from "../components/EachArtwork"
 
 function HomePage() {
@@ -18,10 +19,13 @@ function HomePage() {
     }
 
     return (
-        <div id="all-artworks">
-            {artworks.map(artwork => (
-                <EachArtwork key={artwork.id} artwork={artwork} />
-            ))}
+        <div>
+            <Navbar />
+            <div id="all-artworks">
+                {artworks.map(artwork => (
+                    <EachArtwork key={artwork.id} artwork={artwork} />
+                ))}
+            </div>
         </div>
     )
 }

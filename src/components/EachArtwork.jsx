@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import plus from "../assets/plus.svg"
 
@@ -50,7 +50,8 @@ function EachArtwork({ artwork }) {
                 <div className="tooltip">
                     <p className="each-artwork-title">{eachArtwork.title}</p>
                     <p className="each-artwork-artist">
-                        {eachArtwork.artist_title}, <span className="each-artwork-date">{eachArtwork.date_display}</span>
+                        {eachArtwork.artist_title},{" "}
+                        <span className="each-artwork-date">{eachArtwork.date_display}</span>
                     </p>
                 </div>
                 <div className="each-artwork-container">
