@@ -27,7 +27,7 @@ function EachArtwork({ artwork }) {
         const newArtwork = {
             id: eachArtwork.id,
             title: eachArtwork.title,
-            artist: eachArtwork.artist_title,
+            artist: eachArtwork.artist_display,
             date: eachArtwork.date_display,
             medium: eachArtwork.medium_display,
             dimensions: eachArtwork.dimensions,

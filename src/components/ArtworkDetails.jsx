@@ -19,7 +19,7 @@ function ArtworkDetails({ artwork, onClose }) {
                         <button>Add to favourites</button>
                     </div>
                     <div className="modal-card">
-                        <p className="modal-artist">{artwork.artist_title}</p>
+                        <p className="modal-artist">{artwork.artist_display}</p>
                         <p className="modal-title">
                             {artwork.title},
                             <span className="modal-date">{artwork.date_display}</span>

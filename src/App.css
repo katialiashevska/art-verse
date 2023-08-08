@@ -137,6 +137,10 @@
     background: var(--main-color);
 }
 
+#favourites {
+    margin-bottom: 32px;
+}
+
 .favourites-artwork-container {
     margin: auto 17px;
     height: 400px;
@@ -203,10 +207,11 @@
 .favourites-artist {
     font-size: 25px;
     font-weight: 300;
+    white-space: pre-line;
 }
 
 .favourites-title {
-    font-size: 30px;
+    font-size: 33px;
     font-style: italic;
     font-weight: 700;
 }
@@ -218,12 +223,12 @@
 
 .favourites-medium {
     font-size: 20px;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 .favourites-dimensions {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 300;
 }
 
 .favourites-flex {
