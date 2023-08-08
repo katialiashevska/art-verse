@@ -33,7 +33,7 @@ function FavouritesPage() {
 
     return (
         <div id="favourites">
-            <Link to="/">
+            <Link className="navbar-bg" to="/">
                 <img id="logo" src={logo} alt="ArtVerse logo" />
             </Link>
             <div id="favourites-header">
