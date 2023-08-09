@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import plus from "../assets/plus.svg"
 import ArtworkDetails from "./ArtworkDetails"
-import { addToFavourites } from "./AddToFavourites"
+import { addToFavourites } from "./addToFavourites"
 
 function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)

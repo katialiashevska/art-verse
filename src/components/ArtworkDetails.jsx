@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import exit from "../assets/exit.svg"
-import { addToFavourites } from "./AddToFavourites"
-import { deleteFromFavourites } from "./DeleteFromFavourites"
+import { addToFavourites } from "./addToFavourites"
+import { deleteFromFavourites } from "./deleteFromFavourites"
 import whiteArrow from "../assets/white-arrow.svg"
 import API_URL from "../API_URL"
 
