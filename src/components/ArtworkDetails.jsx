@@ -1,24 +1,41 @@
+import { useState, useEffect } from "react"
+import axios from "axios"
 import exit from "../assets/exit.svg"
-import { addToFavourites } from "./addToFavourites"
+import { addToFavourites } from "./AddToFavourites"
+import { deleteFromFavourites } from "./DeleteFromFavourites"
 import whiteArrow from "../assets/white-arrow.svg"
+import API_URL from "../API_URL"
 
-function ArtworkDetails({ artwork, allArtworks, onClose }) {
-    const handleFavourites = () => {
-        addToFavourites(artwork)
-            .then(message => alert(message))
-            .catch(error => alert(error.message))
-    }
+function ArtworkDetails({ artwork, onClose }) {
+    const [isFavourite, setIsFavourite] = useState(false)
 
-    const currentIndex = allArtworks.findIndex(art => art.id === artwork.id)
+    useEffect(() => {
+        axios
+            .get(API_URL)
+            .then(response => {
+                const isArtworkInFavorites = response.data.some(
+                    favorite => favorite.id === artwork.id
+                )
+                setIsFavourite(isArtworkInFavorites)
+            })
+            .catch(error => console.error(error.message))
+    }, [artwork])
 
-    const goToPreviousArtwork = () => {
-        const previousIndex = (currentIndex - 1 + allArtworks.length) % allArtworks.length
-        // Navigate to previous artwork using allArtworks[previousIndex]
-    }
-
-    const goToNextArtwork = () => {
-        const nextIndex = (currentIndex + 1) % allArtworks.length
-        // Navigate to next artwork using allArtworks[nextIndex]
+    const handleToggleFavourites = () => {
+        if (isFavourite) {
+            deleteFromFavourites(artwork.id)
+                .then(() => {
+                    setIsFavourite(false)
+                })
+                .catch(error => console.error(error.message))
+        } else {
+            addToFavourites(artwork)
+                .then(message => {
+                    alert(message)
+                    setIsFavourite(true)
+                })
+                .catch(error => console.error(error.message))
+        }
     }
 
     return (
@@ -33,21 +50,21 @@ function ArtworkDetails({ artwork, allArtworks, onClose }) {
                 </div>
                 <div className="modal-info-container">
                     <img
-                        className="modal-exit-button"
+                        className="modal-exit-button round-button"
                         src={exit}
                         alt="Exit icon"
                         onClick={onClose}
                     />
                     <div className="modal-navigation">
-                        <button className="modal-previous-button" onClick={goToPreviousArtwork}>
+                        {/* <button className="modal-previous-button round-button">
                             <img src={whiteArrow} alt="Arrow icon" />
+                        </button> */}
+                        <button className="modal-add-button" onClick={handleToggleFavourites}>
+                            {isFavourite ? "Remove from favourites" : "Add to favourites"}
                         </button>
-                        <button className="modal-add-button" onClick={handleFavourites}>
-                            Add to favourites
-                        </button>
-                        <button className="modal-next-button" onClick={goToNextArtwork}>
+                        {/* <button className="modal-next-button round-button">
                             <img src={whiteArrow} alt="Arrow icon" />
-                        </button>
+                        </button> */}
                     </div>
                     <div className="modal-card">
                         <p className="modal-artist">{artwork.artist_display}</p>

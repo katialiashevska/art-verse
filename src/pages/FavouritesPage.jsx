@@ -3,8 +3,8 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import logo from "../assets/logo.svg"
 import blackArrow from "../assets/black-arrow.svg"
-
-const API_URL = "https://art-verse-backend.adaptable.app/favouriteArtworks"
+import { deleteFromFavourites } from "../components/DeleteFromFavourites"
+import API_URL from "../API_URL"
 
 function FavouritesPage() {
     const [favouriteArtworks, setFavouriteArtworks] = useState(null)
@@ -17,14 +17,9 @@ function FavouritesPage() {
     }, [])
 
     const deleteArtwork = artworkId => {
-        axios
-            .delete(`${API_URL}/${artworkId}`)
-            .then(() => {
-                setFavouriteArtworks(artworks =>
-                    artworks.filter(artwork => artwork.id !== artworkId)
-                )
-            })
-            .catch(error => console.error(error.message))
+        deleteFromFavourites(artworkId, setFavouriteArtworks).catch(error =>
+            console.error(error.message)
+        )
     }
 
     if (!favouriteArtworks) {

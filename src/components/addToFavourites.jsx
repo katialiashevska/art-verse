@@ -19,6 +19,7 @@ export const addToFavourites = artwork => {
         })
         .catch(error => {
             console.error(error.message)
+            alert("Failed to add artwork to favourites.")
             throw new Error("Failed to add artwork to favourites.")
         })
 }

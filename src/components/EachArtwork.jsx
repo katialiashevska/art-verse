@@ -2,13 +2,13 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import plus from "../assets/plus.svg"
 import ArtworkDetails from "./ArtworkDetails"
-import { addToFavourites } from "./addToFavourites"
+import { addToFavourites } from "./AddToFavourites"
 
 function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const tooltip = document.querySelectorAll(".tooltip")
-    const allArtworks = document.querySelectorAll(".each-artwork")
+    const allArtworks = [...document.querySelectorAll(".each-artwork")]
 
     useEffect(() => {
         axios
@@ -79,13 +79,7 @@ function EachArtwork({ artwork }) {
                         <img src={plus} alt="Plus icon" />
                     </button>
                 </div>
-                {modalOpen && (
-                    <ArtworkDetails
-                        artwork={eachArtwork}
-                        allArtworks={allArtworks}
-                        onClose={closeModal}
-                    />
-                )}
+                {modalOpen && <ArtworkDetails artwork={eachArtwork} onClose={closeModal} />}
             </article>
         )
     )
