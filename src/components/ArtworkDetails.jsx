@@ -1,4 +1,4 @@
-import React from "react"
+import exit from "../assets/exit.svg"
 
 function ArtworkDetails({ artwork, onClose }) {
     return (
@@ -12,16 +12,19 @@ function ArtworkDetails({ artwork, onClose }) {
                     />
                 </div>
                 <div className="modal-info-container">
-                    <span className="close-button" onClick={onClose}>
-                        &times;
-                    </span>
+                    <img
+                        className="modal-exit-button"
+                        src={exit}
+                        alt="Exit icon"
+                        onClick={onClose}
+                    />
                     <div className="modal-navigation">
-                        <button>Add to favourites</button>
+                        <button className="modal-add-button">Add to favourites</button>
                     </div>
                     <div className="modal-card">
                         <p className="modal-artist">{artwork.artist_display}</p>
                         <p className="modal-title">
-                            {artwork.title},
+                            {artwork.title},{" "}
                             <span className="modal-date">{artwork.date_display}</span>
                         </p>
                         <p className="modal-medium">{artwork.medium_display}</p>

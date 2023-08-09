@@ -7,6 +7,7 @@ function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const tooltip = document.querySelectorAll(".tooltip")
+    const allArtworks = document.querySelectorAll(".each-artwork")
 
     useEffect(() => {
         axios
@@ -63,9 +64,19 @@ function EachArtwork({ artwork }) {
 
     document.addEventListener("mousemove", handleTooltip, false)
 
+    // Handling the fact that the cursor need to point each artwork on homepage
+    // but also stop pointing when the details component is open
+    useEffect(() => {
+        if (modalOpen) {
+            allArtworks.forEach(artwork => artwork.classList.add("pointer-inactive"))
+        } else {
+            allArtworks.forEach(artwork => artwork.classList.remove("pointer-inactive"))
+        }
+    }, [modalOpen, allArtworks])
+
     return (
         eachArtwork && (
-            <article className="each-artwork">
+            <article className={`each-artwork ${modalOpen ? "pointer-inactive" : ""}`}>
                 <div className="tooltip">
                     <p className="each-artwork-title">{eachArtwork.title}</p>
                     <p className="each-artwork-artist">
