@@ -1,6 +1,26 @@
 import exit from "../assets/exit.svg"
+import { addToFavourites } from "./addToFavourites"
+import whiteArrow from "../assets/white-arrow.svg"
 
-function ArtworkDetails({ artwork, onClose }) {
+function ArtworkDetails({ artwork, allArtworks, onClose }) {
+    const handleFavourites = () => {
+        addToFavourites(artwork)
+            .then(message => alert(message))
+            .catch(error => alert(error.message))
+    }
+
+    const currentIndex = allArtworks.findIndex(art => art.id === artwork.id)
+
+    const goToPreviousArtwork = () => {
+        const previousIndex = (currentIndex - 1 + allArtworks.length) % allArtworks.length
+        // Navigate to previous artwork using allArtworks[previousIndex]
+    }
+
+    const goToNextArtwork = () => {
+        const nextIndex = (currentIndex + 1) % allArtworks.length
+        // Navigate to next artwork using allArtworks[nextIndex]
+    }
+
     return (
         <div className="modal-overlay">
             <div className="modal-content">
@@ -19,7 +39,15 @@ function ArtworkDetails({ artwork, onClose }) {
                         onClick={onClose}
                     />
                     <div className="modal-navigation">
-                        <button className="modal-add-button">Add to favourites</button>
+                        <button className="modal-previous-button" onClick={goToPreviousArtwork}>
+                            <img src={whiteArrow} alt="Arrow icon" />
+                        </button>
+                        <button className="modal-add-button" onClick={handleFavourites}>
+                            Add to favourites
+                        </button>
+                        <button className="modal-next-button" onClick={goToNextArtwork}>
+                            <img src={whiteArrow} alt="Arrow icon" />
+                        </button>
                     </div>
                     <div className="modal-card">
                         <p className="modal-artist">{artwork.artist_display}</p>

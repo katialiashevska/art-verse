@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import logo from "../assets/logo.svg"
-import arrow from "../assets/arrow.svg"
+import blackArrow from "../assets/black-arrow.svg"
 
 const API_URL = "https://art-verse-backend.adaptable.app/favouriteArtworks"
 
@@ -38,7 +38,7 @@ function FavouritesPage() {
             </Link>
             <div id="favourites-header">
                 <Link className="back-button" to="/">
-                    <img id="arrow" src={arrow} alt="Arrow icon" />
+                    <img id="black-arrow" src={blackArrow} alt="Arrow icon" />
                     Back
                 </Link>
                 <h1>My favourites</h1>

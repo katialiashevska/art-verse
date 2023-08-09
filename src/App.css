@@ -199,7 +199,7 @@
     color: var(--main-color);
 }
 
-.back-button:hover #arrow {
+.back-button:hover #black-arrow {
     filter: invert(39%) sepia(45%) saturate(6510%) hue-rotate(230deg) brightness(98%) contrast(90%);
 }
 
@@ -313,7 +313,7 @@
     align-self: flex-end;
     gap: 32px;
     margin-right: 32px;
-    margin-bottom: 10px;
+    height: 95vh;
 }
 
 .modal-exit-button {

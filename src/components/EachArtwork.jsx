@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import plus from "../assets/plus.svg"
 import ArtworkDetails from "./ArtworkDetails"
+import { addToFavourites } from "./addToFavourites"
 
 function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)
@@ -24,27 +25,10 @@ function EachArtwork({ artwork }) {
         setModalOpen(false)
     }
 
-    const addToFavourites = () => {
-        const newArtwork = {
-            id: eachArtwork.id,
-            title: eachArtwork.title,
-            artist: eachArtwork.artist_display,
-            date: eachArtwork.date_display,
-            medium: eachArtwork.medium_display,
-            dimensions: eachArtwork.dimensions,
-            alt_text: eachArtwork.thumbnail.alt_text,
-            img: `https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`,
-        }
-
-        axios
-            .post("https://art-verse-backend.adaptable.app/favouriteArtworks", newArtwork)
-            .then(() => {
-                alert("Artwork added to favorites!")
-            })
-            .catch(error => {
-                console.error(error.message)
-                alert("Failed to add artwork to favorites.")
-            })
+    const handleFavourites = () => {
+        addToFavourites(eachArtwork)
+            .then(message => alert(message))
+            .catch(error => alert(error.message))
     }
 
     const handleTooltip = e => {
@@ -91,11 +75,17 @@ function EachArtwork({ artwork }) {
                         alt={eachArtwork.thumbnail.alt_text}
                         onClick={openModal}
                     />
-                    <button className="add-button" onClick={addToFavourites}>
+                    <button className="add-button" onClick={handleFavourites}>
                         <img src={plus} alt="Plus icon" />
                     </button>
                 </div>
-                {modalOpen && <ArtworkDetails artwork={eachArtwork} onClose={closeModal} />}
+                {modalOpen && (
+                    <ArtworkDetails
+                        artwork={eachArtwork}
+                        allArtworks={allArtworks}
+                        onClose={closeModal}
+                    />
+                )}
             </article>
         )
     )
