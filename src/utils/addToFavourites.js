@@ -8,7 +8,7 @@ export const addToFavourites = (artwork, setIsFavourite) => {
         date: artwork.date_display,
         medium: artwork.medium_display,
         dimensions: artwork.dimensions,
-        alt_text: artwork.thumbnail.alt_text,
+        altText: artwork.thumbnail.alt_text,
         img: `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`,
     }
 

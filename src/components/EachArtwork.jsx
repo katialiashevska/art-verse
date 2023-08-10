@@ -13,7 +13,6 @@ function EachArtwork({ artwork }) {
     const [modalOpen, setModalOpen] = useState(false)
     const [showAddToast, setShowAddToast] = useState(false)
     const [showRemoveToast, setShowRemoveToast] = useState(false)
-    const [favouriteArtworks, setFavouriteArtworks] = useState([])
     const [isFavourite, setIsFavourite] = useState(false)
 
     const tooltip = document.querySelectorAll(".tooltip")
@@ -23,12 +22,10 @@ function EachArtwork({ artwork }) {
         axios
             .get(API_URL)
             .then(response => {
-                setFavouriteArtworks(response.data)
-                // Check if the current artwork is part of the favorites
-                const isCurrentFavourite = response.data.some(
-                    favourite => favourite.id === eachArtwork?.id
-                )
-                setIsFavourite(isCurrentFavourite)
+                const favoriteIds = response.data.map(item => item.id)
+                if (favoriteIds.includes(eachArtwork?.id)) {
+                    setIsFavourite(true)
+                }
             })
             .catch(error => console.error(error.message))
     }, [eachArtwork])

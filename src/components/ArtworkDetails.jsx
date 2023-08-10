@@ -55,7 +55,6 @@ function ArtworkDetails({ artwork, onClose }) {
             <div className="modal-content">
                 {showAddToast && <Toast message="Added to favourites" />}
                 {showRemoveToast && <Toast message="Removed from favourites" />}
-
                 <div className="modal-img-container">
                     <img
                         src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}

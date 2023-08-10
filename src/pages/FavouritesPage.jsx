@@ -6,10 +6,12 @@ import blackArrow from "../assets/black-arrow.svg"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "../components/Toast"
+import ArtworkDetails from "../components/ArtworkDetails"
 
 function FavouritesPage() {
     const [favouriteArtworks, setFavouriteArtworks] = useState([])
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    const [selectedArtwork, setSelectedArtwork] = useState(null)
 
     useEffect(() => {
         axios
@@ -29,6 +31,14 @@ function FavouritesPage() {
             .catch(error => console.error(error.message))
     }
 
+    const openModal = artwork => {
+        setSelectedArtwork(artwork)
+    }
+
+    const closeModal = () => {
+        setSelectedArtwork(null)
+    }
+
     return (
         favouriteArtworks && (
             <div id="favourites">
@@ -43,7 +53,6 @@ function FavouritesPage() {
                     <h1>My favourites</h1>
                 </div>
                 {showRemoveToast && <Toast message="Removed from favourites" />}
-
                 {favouriteArtworks.length === 0 && (
                     <div id="no-favourites-container">
                         <p id="no-favourites-text">No artworks selected yet?</p>
@@ -60,7 +69,8 @@ function FavouritesPage() {
                                     <img
                                         className="favourites-img"
                                         src={artwork.img}
-                                        alt={artwork.alt_text}
+                                        alt={artwork.altText}
+                                        onClick={() => openModal(artwork)}
                                     />
                                 </div>
                                 <div className="favourites-text-container">
@@ -84,6 +94,9 @@ function FavouritesPage() {
                                 onClick={() => deleteArtwork(artwork.id)}>
                                 Remove
                             </button>
+                            {selectedArtwork && (
+                                <ArtworkDetails artwork={selectedArtwork} onClose={closeModal} />
+                            )}
                         </article>
                     ))}
             </div>
