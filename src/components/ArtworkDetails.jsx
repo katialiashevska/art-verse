@@ -53,8 +53,8 @@ function ArtworkDetails({ artwork, onClose }) {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                {showAddToast && <Toast message="Artwork added" />}
-                {showRemoveToast && <Toast message="Artwork removed" />}
+                {showAddToast && <Toast message="Added to favourites" />}
+                {showRemoveToast && <Toast message="Removed from favourites" />}
 
                 <div className="modal-img-container">
                     <img

@@ -8,7 +8,7 @@ import API_URL from "../utils/API_URL"
 import Toast from "../components/Toast"
 
 function FavouritesPage() {
-    const [favouriteArtworks, setFavouriteArtworks] = useState(null)
+    const [favouriteArtworks, setFavouriteArtworks] = useState([])
     const [showRemoveToast, setShowRemoveToast] = useState(false)
 
     useEffect(() => {
@@ -42,7 +42,7 @@ function FavouritesPage() {
                     </Link>
                     <h1>My favourites</h1>
                 </div>
-                {showRemoveToast && <Toast message="Artwork removed" />}
+                {showRemoveToast && <Toast message="Removed from favourites" />}
 
                 {favouriteArtworks.length === 0 && (
                     <div id="no-favourites-container">

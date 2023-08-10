@@ -6,16 +6,32 @@ import ArtworkDetails from "./ArtworkDetails"
 import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"
+import API_URL from "../utils/API_URL"
 
 function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [showAddToast, setShowAddToast] = useState(false)
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    const [favouriteArtworks, setFavouriteArtworks] = useState([])
     const [isFavourite, setIsFavourite] = useState(false)
 
     const tooltip = document.querySelectorAll(".tooltip")
     const allArtworks = [...document.querySelectorAll(".each-artwork")]
+
+    useEffect(() => {
+        axios
+            .get(API_URL)
+            .then(response => {
+                setFavouriteArtworks(response.data)
+                // Check if the current artwork is part of the favorites
+                const isCurrentFavourite = response.data.some(
+                    favourite => favourite.id === eachArtwork?.id
+                )
+                setIsFavourite(isCurrentFavourite)
+            })
+            .catch(error => console.error(error.message))
+    }, [eachArtwork])
 
     useEffect(() => {
         axios
@@ -96,8 +112,8 @@ function EachArtwork({ artwork }) {
                     </p>
                 </div>
                 <div className="each-artwork-container">
-                    {showAddToast && <Toast message="Artwork added" />}
-                    {showRemoveToast && <Toast message="Artwork removed" />}
+                    {showAddToast && <Toast message="Added to favourites" />}
+                    {showRemoveToast && <Toast message="Removed from favourites" />}
                     <img
                         className="each-artwork-img"
                         src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}
