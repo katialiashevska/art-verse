@@ -14,7 +14,7 @@ function HomePage() {
                 setTimeout(() => {
                     setArtworks(response.data.data)
                     setIsLoading(false)
-                }, 3000)
+                }, 5000)
             })
             .catch(error => {
                 console.error(error.message)
