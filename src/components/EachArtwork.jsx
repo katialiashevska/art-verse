@@ -38,7 +38,7 @@ function EachArtwork({ artwork }) {
 
             let leftPosition = e.pageX + 15
             if (leftPosition + tooltipWidth > pageWidth) {
-                leftPosition = e.pageX - tooltipWidth - 30
+                leftPosition = e.pageX - tooltipWidth - 100
             }
 
             tooltip[i].style.left = leftPosition + "px"
@@ -62,9 +62,9 @@ function EachArtwork({ artwork }) {
         eachArtwork && (
             <article className={`each-artwork ${modalOpen ? "pointer-inactive" : ""}`}>
                 <div className="tooltip">
-                    <p className="each-artwork-title">{eachArtwork.title}</p>
-                    <p className="each-artwork-artist">
-                        {eachArtwork.artist_title},{" "}
+                    <p className="each-artwork-artist">{eachArtwork.artist_title}</p>
+                    <p className="each-artwork-title">
+                        {eachArtwork.title},{" "}
                         <span className="each-artwork-date">{eachArtwork.date_display}</span>
                     </p>
                 </div>

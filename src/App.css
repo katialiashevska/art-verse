@@ -1,5 +1,5 @@
 :root {
-    --main-color: #5d5fef;
+    --main-color: #9747ff;
     --black: hsl(0, 0%, 13%);
     --main-font: "Helvetica Neue", sans-serif;
 }
@@ -56,10 +56,41 @@
 
 #logo {
     position: fixed;
-    top: 24px;
+    top: 28px;
     left: 50%;
     transform: translate(-50%);
     z-index: 10;
+}
+
+#loading-container {
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#loading-text {
+    text-align: center;
+    font-size: 70px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+#progress-bar {
+    width: 300px;
+    height: 20px;
+    border-radius: 20px;
+    background: repeating-linear-gradient(135deg, #9747ff 0 10px, #fff 0 20px) 0/0% no-repeat,
+        repeating-linear-gradient(135deg, #ddd 0 10px, #eee 0 20px) 0/100%;
+    animation: progress 3.2s infinite;
+}
+
+@keyframes progress {
+    100% {
+        background-size: 100%;
+    }
 }
 
 #all-artworks {
@@ -81,32 +112,35 @@
 
 .tooltip {
     display: none;
-    background: #c8c8c8;
     margin: 25px;
-    padding: 2px 16px;
+    padding: 0 20px;
     position: absolute;
     z-index: 9;
     max-width: 300px;
     text-align: start;
-    background: #ffd633;
+    background: var(--main-color);
+    color: #fff;
 }
 
 .each-artwork:hover .tooltip {
     display: block;
 }
 
-.each-artwork-title {
-    font-size: 18px;
-    font-weight: 500;
+.each-artwork-artist {
+    font-size: 20px;
+    font-weight: 300;
 }
 
-.each-artwork-artist {
-    font-weight: 400;
-    font-size: 16px;
+.each-artwork-title {
+    font-size: 23px;
+    font-style: italic;
+    font-weight: 700;
+    margin-top: -10px;
 }
 
 .each-artwork-date {
     font-weight: 300;
+    font-style: normal;
 }
 
 .each-artwork-container {
@@ -138,6 +172,52 @@
 
 .add-button:hover {
     background: var(--main-color);
+}
+
+#no-favourites-container {
+    background: linear-gradient(180deg, rgba(151, 71, 255, 0) 0%, var(--main-color) 100%);
+    position: absolute;
+    left: 0;
+    height: 70vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#no-favourites-text {
+    text-align: center;
+    font-size: 70px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.favourites-button {
+    font-family: var(--main-font);
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 64px;
+    border: 1px solid var(--black);
+    font-size: 20px;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    color: var(--black);
+    text-decoration: none;
+}
+
+.favourites-button:hover {
+    color: #fff;
+    background: var(--main-color);
+    border: #fff;
+}
+
+.favourites-button.remove {
+    position: absolute;
+    top: 32px;
+    right: 32px;
 }
 
 #favourites {
@@ -249,30 +329,6 @@
     flex-flow: column nowrap;
     justify-content: space-between;
     margin-top: -25px;
-}
-
-.remove-button {
-    font-family: var(--main-font);
-    position: absolute;
-    top: 32px;
-    right: 32px;
-    display: flex;
-    padding: 8px 16px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 64px;
-    border: 1px solid var(--black);
-    font-size: 20px;
-    font-weight: 500;
-    background: #fff;
-    cursor: pointer;
-    color: var(--black);
-}
-
-.remove-button:hover {
-    color: #fff;
-    background: var(--main-color);
-    border: none;
 }
 
 .favourites-text-container p {
