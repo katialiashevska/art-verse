@@ -39,7 +39,7 @@ function About({ onClose }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://github.com/katialiashevska">
-                    GitHub account
+                    GitHub
                 </a>{" "}
                 for more stuff :)
             </p>

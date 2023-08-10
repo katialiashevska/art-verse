@@ -5,9 +5,12 @@ import { addToFavourites } from "./addToFavourites"
 import { deleteFromFavourites } from "./deleteFromFavourites"
 import whiteArrow from "../assets/white-arrow.svg"
 import API_URL from "../API_URL"
+import Toast from "./Toast"
 
 function ArtworkDetails({ artwork, onClose }) {
     const [isFavourite, setIsFavourite] = useState(false)
+    const [showAddToast, setShowAddToast] = useState(false)
+    const [showRemoveToast, setShowRemoveToast] = useState(false)
 
     useEffect(() => {
         axios
@@ -26,21 +29,33 @@ function ArtworkDetails({ artwork, onClose }) {
             deleteFromFavourites(artwork.id)
                 .then(() => {
                     setIsFavourite(false)
+                    setShowRemoveToast(true)
+                    setTimeout(() => {
+                        setShowRemoveToast(false)
+                    }, 3000)
                 })
                 .catch(error => console.error(error.message))
         } else {
             addToFavourites(artwork)
-                .then(message => {
-                    alert(message)
+                .then(() => {
                     setIsFavourite(true)
+                    setShowAddToast(true)
+                    setTimeout(() => {
+                        setShowAddToast(false)
+                    }, 3000)
                 })
-                .catch(error => console.error(error.message))
+                .catch(error => {
+                    console.error(error.message)
+                })
         }
     }
 
     return (
         <div className="modal-overlay">
             <div className="modal-content">
+                {showAddToast && <Toast message="Artwork added" />}
+                {showRemoveToast && <Toast message="Artwork removed" />}
+
                 <div className="modal-img-container">
                     <img
                         src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}

@@ -3,10 +3,13 @@ import axios from "axios"
 import plus from "../assets/plus.svg"
 import ArtworkDetails from "./ArtworkDetails"
 import { addToFavourites } from "./addToFavourites"
+import Toast from "./Toast"
 
 function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
+    const [showToast, setShowToast] = useState(false)
+
     const tooltip = document.querySelectorAll(".tooltip")
     const allArtworks = [...document.querySelectorAll(".each-artwork")]
 
@@ -27,8 +30,15 @@ function EachArtwork({ artwork }) {
 
     const handleFavourites = () => {
         addToFavourites(eachArtwork)
-            .then(message => alert(message))
-            .catch(error => alert(error.message))
+            .then(() => {
+                setShowToast(true)
+                setTimeout(() => {
+                    setShowToast(false)
+                }, 3000)
+            })
+            .catch(error => {
+                console.error(error.message)
+            })
     }
 
     const handleTooltip = e => {
@@ -69,6 +79,7 @@ function EachArtwork({ artwork }) {
                     </p>
                 </div>
                 <div className="each-artwork-container">
+                    {showToast && <Toast message="Artwork added" />}
                     <img
                         className="each-artwork-img"
                         src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}

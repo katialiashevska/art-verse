@@ -5,9 +5,11 @@ import logo from "../assets/logo.svg"
 import blackArrow from "../assets/black-arrow.svg"
 import { deleteFromFavourites } from "../components/deleteFromFavourites"
 import API_URL from "../API_URL"
+import Toast from "../components/Toast"
 
 function FavouritesPage() {
     const [favouriteArtworks, setFavouriteArtworks] = useState(null)
+    const [showRemoveToast, setShowRemoveToast] = useState(false)
 
     useEffect(() => {
         axios
@@ -17,9 +19,14 @@ function FavouritesPage() {
     }, [])
 
     const deleteArtwork = artworkId => {
-        deleteFromFavourites(artworkId, setFavouriteArtworks).catch(error =>
-            console.error(error.message)
-        )
+        deleteFromFavourites(artworkId, setFavouriteArtworks)
+            .then(() => {
+                setShowRemoveToast(true)
+                setTimeout(() => {
+                    setShowRemoveToast(false)
+                }, 3000)
+            })
+            .catch(error => console.error(error.message))
     }
 
     return (
@@ -35,6 +42,8 @@ function FavouritesPage() {
                     </Link>
                     <h1>My favourites</h1>
                 </div>
+                {showRemoveToast && <Toast message="Artwork removed" />}
+
                 {favouriteArtworks.length === 0 && (
                     <div id="no-favourites-container">
                         <p id="no-favourites-text">No artworks selected yet?</p>
