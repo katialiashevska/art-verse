@@ -3,8 +3,8 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import logo from "../assets/logo.svg"
 import blackArrow from "../assets/black-arrow.svg"
-import { deleteFromFavourites } from "../components/deleteFromFavourites"
-import API_URL from "../API_URL"
+import { deleteFromFavourites } from "../utils/deleteFromFavourites"
+import API_URL from "../utils/API_URL"
 import Toast from "../components/Toast"
 
 function FavouritesPage() {

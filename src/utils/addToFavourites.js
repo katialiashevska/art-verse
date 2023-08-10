@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const addToFavourites = artwork => {
+export const addToFavourites = (artwork, setIsFavourite) => {
     const newArtwork = {
         id: artwork.id,
         title: artwork.title,
@@ -15,7 +15,7 @@ export const addToFavourites = artwork => {
     return axios
         .post("https://art-verse-backend.adaptable.app/favouriteArtworks", newArtwork)
         .then(() => {
-            return "Artwork added to favourites!"
+            setIsFavourite(true)
         })
         .catch(error => {
             console.error(error.message)

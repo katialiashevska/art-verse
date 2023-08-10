@@ -1,7 +1,6 @@
 import logo from "../assets/logo.svg"
 import { Link } from "react-router-dom"
 import { useState } from "react"
-
 import About from "./About"
 
 function Navbar() {

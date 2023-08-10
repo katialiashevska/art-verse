@@ -1,11 +1,10 @@
-import React from "react"
 import exit from "../assets/exit.svg"
 
 function About({ onClose }) {
     return (
         <div id="about-overlay">
             <div id="about-header">
-                <h1>About this project</h1>
+                <h1>About Art-Verse</h1>
                 <img
                     className="about-exit-button round-button"
                     src={exit}
@@ -25,15 +24,15 @@ function About({ onClose }) {
                 </a>
                 , which is an amazing plaform used by everybody working in the art field on a daily
                 basis. Art-Verse allows you to view a catalogue of 100 modern art masterpieces from
-                the collection of one of the world's major art museums,{" "}
+                the collection of{" "}
                 <a
                     className="about-link"
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://www.artic.edu/">
                     The Art Institute of Chicago
-                </a>
-                , and create a list of favourites. Check out my{" "}
+                </a>{" "}
+                and create a list of favourites. Check out my{" "}
                 <a
                     className="about-link"
                     target="_blank"

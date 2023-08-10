@@ -1,5 +1,5 @@
 import axios from "axios"
-import API_URL from "../API_URL"
+import API_URL from "./API_URL"
 
 export const deleteFromFavourites = (artworkId, setFavouriteArtworks) => {
     return axios

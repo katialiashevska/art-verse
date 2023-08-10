@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import plus from "../assets/plus.svg"
+import minus from "../assets/minus.svg"
 import ArtworkDetails from "./ArtworkDetails"
-import { addToFavourites } from "./addToFavourites"
+import { addToFavourites } from "../utils/addToFavourites"
+import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"
 
 function EachArtwork({ artwork }) {
     const [eachArtwork, setEachArtwork] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
-    const [showToast, setShowToast] = useState(false)
+    const [showAddToast, setShowAddToast] = useState(false)
+    const [showRemoveToast, setShowRemoveToast] = useState(false)
+    const [isFavourite, setIsFavourite] = useState(false)
 
     const tooltip = document.querySelectorAll(".tooltip")
     const allArtworks = [...document.querySelectorAll(".each-artwork")]
@@ -28,17 +32,30 @@ function EachArtwork({ artwork }) {
         setModalOpen(false)
     }
 
-    const handleFavourites = () => {
-        addToFavourites(eachArtwork)
-            .then(() => {
-                setShowToast(true)
-                setTimeout(() => {
-                    setShowToast(false)
-                }, 3000)
-            })
-            .catch(error => {
-                console.error(error.message)
-            })
+    const handleToggleFavourites = () => {
+        if (isFavourite) {
+            deleteFromFavourites(eachArtwork.id)
+                .then(() => {
+                    setIsFavourite(false)
+                    setShowRemoveToast(true)
+                    setTimeout(() => {
+                        setShowRemoveToast(false)
+                    }, 3000)
+                })
+                .catch(error => console.error(error.message))
+        } else {
+            addToFavourites(eachArtwork)
+                .then(() => {
+                    setIsFavourite(true)
+                    setShowAddToast(true)
+                    setTimeout(() => {
+                        setShowAddToast(false)
+                    }, 3000)
+                })
+                .catch(error => {
+                    console.error(error.message)
+                })
+        }
     }
 
     const handleTooltip = e => {
@@ -79,15 +96,20 @@ function EachArtwork({ artwork }) {
                     </p>
                 </div>
                 <div className="each-artwork-container">
-                    {showToast && <Toast message="Artwork added" />}
+                    {showAddToast && <Toast message="Artwork added" />}
+                    {showRemoveToast && <Toast message="Artwork removed" />}
                     <img
                         className="each-artwork-img"
                         src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}
                         alt={eachArtwork.thumbnail.alt_text}
                         onClick={openModal}
                     />
-                    <button className="add-button" onClick={handleFavourites}>
-                        <img src={plus} alt="Plus icon" />
+                    <button className="add-button" onClick={handleToggleFavourites}>
+                        {isFavourite ? (
+                            <img src={minus} alt="Minus icon" />
+                        ) : (
+                            <img src={plus} alt="Plus icon" />
+                        )}
                     </button>
                 </div>
                 {modalOpen && <ArtworkDetails artwork={eachArtwork} onClose={closeModal} />}

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import exit from "../assets/exit.svg"
-import { addToFavourites } from "./addToFavourites"
-import { deleteFromFavourites } from "./deleteFromFavourites"
+import { addToFavourites } from "../utils/addToFavourites"
+import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import whiteArrow from "../assets/white-arrow.svg"
-import API_URL from "../API_URL"
+import API_URL from "../utils/API_URL"
 import Toast from "./Toast"
 
 function ArtworkDetails({ artwork, onClose }) {

@@ -166,6 +166,11 @@
     display: none;
 }
 
+.add-button > img {
+    height: 24px;
+    width: 24px;
+}
+
 .each-artwork-container:hover .add-button {
     display: inline-flex;
 }
@@ -277,7 +282,7 @@
 }
 
 .back-button:hover #black-arrow {
-    filter: invert(39%) sepia(45%) saturate(6510%) hue-rotate(230deg) brightness(98%) contrast(90%);
+    filter: invert(32%) sepia(75%) saturate(2995%) hue-rotate(249deg) brightness(98%) contrast(106%);
 }
 
 #favourites-header {
@@ -504,7 +509,7 @@
     text-decoration-color: #fff;
     text-decoration-line: underline;
     text-decoration-thickness: 5px;
-    text-underline-offset: 16px;
+    text-underline-offset: 10px;
 }
 
 .about-exit-button {
