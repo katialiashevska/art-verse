@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import exit from "../assets/exit.svg"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"
 import "../styles/modal.css"
+import { PressEscape } from "./PressEscape"
 
 // Props:
 // - artwork: the favourite artwork object to display
@@ -13,6 +14,8 @@ function FavouriteDetails({ artwork, onClose, onDelete }) {
     const [isFavourite, setIsFavourite] = useState(false)
     // State to manage "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+
+    PressEscape(onClose)
 
     const deleteFavourites = () => {
         deleteFromFavourites(artwork.id)

@@ -22,6 +22,7 @@
     position: absolute;
     z-index: 9;
     max-width: 300px;
+    min-width: 200px;
     text-align: start;
     background: var(--main-color);
     color: #fff;

@@ -10,9 +10,10 @@ import FavouriteDetails from "../components/FavouriteDetails"
 import "../styles/favourites.css"
 
 function FavouritesPage() {
-    // State to store favourite artworks and manage toast visibility
     const [favouriteArtworks, setFavouriteArtworks] = useState([])
+    // State to manage the display of "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    // State to manage selected artwork for modal
     const [selectedArtwork, setSelectedArtwork] = useState(null)
 
     useEffect(() => {

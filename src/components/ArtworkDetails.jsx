@@ -6,6 +6,7 @@ import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "./Toast"
 import "../styles/modal.css"
+import { PressEscape } from "./PressEscape"
 
 function ArtworkDetails({ artwork, onClose }) {
     // State to track whether the artwork is in favourites or not
@@ -14,6 +15,8 @@ function ArtworkDetails({ artwork, onClose }) {
     const [showAddToast, setShowAddToast] = useState(false)
     // State to manage the display of "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+
+    PressEscape(onClose)
 
     // Fetch data from API to determine if the artwork is in favourites
     // when the artwork prop changes
