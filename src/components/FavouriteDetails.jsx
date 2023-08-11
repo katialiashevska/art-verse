@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import exit from "../assets/exit.svg"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"

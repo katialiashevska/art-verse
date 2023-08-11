@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import exit from "../assets/exit.svg"
 import "../styles/about.css"
 import { PressEscape } from "./PressEscape"
