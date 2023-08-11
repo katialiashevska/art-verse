@@ -7,8 +7,10 @@ import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "../components/Toast"
 import FavouriteDetails from "../components/FavouriteDetails"
+import "../styles/favourites.css"
 
 function FavouritesPage() {
+    // State to store favourite artworks and manage toast visibility
     const [favouriteArtworks, setFavouriteArtworks] = useState([])
     const [showRemoveToast, setShowRemoveToast] = useState(false)
     const [selectedArtwork, setSelectedArtwork] = useState(null)
@@ -31,6 +33,7 @@ function FavouritesPage() {
             .catch(error => console.error(error.message))
     }
 
+    // Function to update state after a deletion of an artwork
     const handleDeleteArtwork = () => {
         setFavouriteArtworks(prevArtworks =>
             prevArtworks.filter(artwork => artwork.id !== selectedArtwork.id)
@@ -41,10 +44,10 @@ function FavouritesPage() {
         }, 3000)
     }
 
+    // Functions to open/close the modal for artwork details
     const openModal = artwork => {
         setSelectedArtwork(artwork)
     }
-
     const closeModal = () => {
         setSelectedArtwork(null)
     }

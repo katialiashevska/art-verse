@@ -3,15 +3,20 @@ import axios from "axios"
 import exit from "../assets/exit.svg"
 import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
-import whiteArrow from "../assets/white-arrow.svg"
 import API_URL from "../utils/API_URL"
 import Toast from "./Toast"
+import "../styles/modal.css"
 
 function ArtworkDetails({ artwork, onClose }) {
+    // State to track whether the artwork is in favourites or not
     const [isFavourite, setIsFavourite] = useState(false)
+    // State to manage the display of "Added to favourites" toast
     const [showAddToast, setShowAddToast] = useState(false)
+    // State to manage the display of "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
 
+    // Fetch data from API to determine if the artwork is in favourites
+    // when the artwork prop changes
     useEffect(() => {
         axios
             .get(API_URL)
@@ -24,12 +29,15 @@ function ArtworkDetails({ artwork, onClose }) {
             .catch(error => console.error(error.message))
     }, [artwork])
 
+    // Function to handle toggling artwork's favourite status
+    // to display all the info accordingly
     const handleToggleFavourites = () => {
         if (isFavourite) {
             deleteFromFavourites(artwork.id)
                 .then(() => {
                     setIsFavourite(false)
                     setShowRemoveToast(true)
+                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowRemoveToast(false)
                     }, 3000)
@@ -40,6 +48,7 @@ function ArtworkDetails({ artwork, onClose }) {
                 .then(() => {
                     setIsFavourite(true)
                     setShowAddToast(true)
+                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowAddToast(false)
                     }, 3000)
@@ -69,16 +78,12 @@ function ArtworkDetails({ artwork, onClose }) {
                         alt="Exit icon"
                         onClick={onClose}
                     />
-                    <div className="modal-navigation">
-                        {/* <button className="modal-previous-button round-button">
-                            <img src={whiteArrow} alt="Arrow icon" />
-                        </button> */}
-                        <button className="modal-add-button" onClick={handleToggleFavourites}>
+                    <div className="modal-buttons">
+                        <button
+                            className="modal-add-remove-button"
+                            onClick={handleToggleFavourites}>
                             {isFavourite ? "Remove from favourites" : "Add to favourites"}
                         </button>
-                        {/* <button className="modal-next-button round-button">
-                            <img src={whiteArrow} alt="Arrow icon" />
-                        </button> */}
                     </div>
                     <div className="modal-card">
                         <p className="modal-artist">{artwork.artist_display}</p>

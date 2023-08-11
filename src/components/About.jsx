@@ -1,16 +1,17 @@
 import exit from "../assets/exit.svg"
+import "../styles/about.css"
 
 function About({ onClose }) {
     return (
         <div id="about-overlay">
             <div id="about-header">
-                <h1>About Art-Verse</h1>
                 <img
                     className="about-exit-button round-button"
                     src={exit}
                     alt="Exit icon"
                     onClick={onClose}
                 />
+                <h1>About Art-Verse</h1>
             </div>
             <p id="about-text">
                 Hi! My name is Katia and I created this app during my 2023 Ironhack bootcamp in
@@ -22,7 +23,7 @@ function About({ onClose }) {
                     href="https://artsandculture.google.com/">
                     Google Arts & Culture
                 </a>
-                , which is an amazing plaform used by everybody working in the art field on a daily
+                , an amazing plaform used by everybody working in the art field on a daily
                 basis. Art-Verse allows you to view a catalogue of 100 modern art masterpieces from
                 the collection of{" "}
                 <a

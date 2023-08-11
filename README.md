@@ -4,7 +4,7 @@ _by Katia Liashevska_
 
 ## Description of the project
 
-The Art-Verse app is the second project I created during my 2023 Ironhack bootcamp in full-stack web development. I was inspired by [Google Arts & Culture](https://artsandculture.google.com/), which is an amazing plaform used by everybody working in the art field on a daily basis. This is a very simplified version that I created from scratch in 6 days.
+Art-Verse is the second project I created during my 2023 Ironhack bootcamp in full-stack web development. I was inspired by [Google Arts & Culture](https://artsandculture.google.com/), an amazing plaform used by everybody working in the art field on a daily basis. This is a very simplified version that I created from scratch in 6 days.
 The app allows you to view a catalogue of 100 modern art masterpieces from the collection of one of the world's major art museums, [The Art Institute of Chicago](https://www.artic.edu/), and add as many of them as you would like to your favourites list that you can access on a dedicated page. It's a way to create your own digital art collection based on an incredible selection of top-tier artworks.
 
 ## Tech stack

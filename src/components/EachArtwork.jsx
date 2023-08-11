@@ -7,17 +7,24 @@ import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"
 import API_URL from "../utils/API_URL"
+import "../styles/artworks.css"
 
 function EachArtwork({ artwork }) {
+    // State to hold detailed artwork information
     const [eachArtwork, setEachArtwork] = useState(null)
+    // State to manage modal display
     const [modalOpen, setModalOpen] = useState(false)
+    // State to manage "Added to favourites" toast
     const [showAddToast, setShowAddToast] = useState(false)
+    // State to manage "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    // State to track artwork's favourite status
     const [isFavourite, setIsFavourite] = useState(false)
 
     const tooltip = document.querySelectorAll(".tooltip")
     const allArtworks = [...document.querySelectorAll(".each-artwork")]
 
+    // Effect to check if the artwork is a favourite
     useEffect(() => {
         axios
             .get(API_URL)
@@ -30,6 +37,7 @@ function EachArtwork({ artwork }) {
             .catch(error => console.error(error.message))
     }, [eachArtwork])
 
+    // Effect to fetch detailed artwork information
     useEffect(() => {
         axios
             .get(artwork.api_link)
@@ -37,20 +45,22 @@ function EachArtwork({ artwork }) {
             .catch(error => console.error(error.message))
     }, [artwork.api_link])
 
+    // Functions to open/close the modal for artwork details
     const openModal = () => {
         setModalOpen(true)
     }
-
     const closeModal = () => {
         setModalOpen(false)
     }
 
+    // Function to toggle artwork's favourite status
     const handleToggleFavourites = () => {
         if (isFavourite) {
             deleteFromFavourites(eachArtwork.id)
                 .then(() => {
                     setIsFavourite(false)
                     setShowRemoveToast(true)
+                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowRemoveToast(false)
                     }, 3000)
@@ -61,6 +71,7 @@ function EachArtwork({ artwork }) {
                 .then(() => {
                     setIsFavourite(true)
                     setShowAddToast(true)
+                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowAddToast(false)
                     }, 3000)
@@ -71,6 +82,7 @@ function EachArtwork({ artwork }) {
         }
     }
 
+    // Function to handle tooltip position on the page
     const handleTooltip = e => {
         for (let i = 0; i <= tooltip.length; i++) {
             const tooltipWidth = tooltip[i].offsetWidth
@@ -85,11 +97,11 @@ function EachArtwork({ artwork }) {
             tooltip[i].style.top = e.pageY + "px"
         }
     }
-
+    // Attach the handleTooltip function to mousemove event
     document.addEventListener("mousemove", handleTooltip, false)
 
-    // Handling the fact that the cursor need to point each artwork on homepage
-    // but also stop pointing when the details component is open
+    // Effect to handle the fact that the cursor needs to point to each artwork on homepage
+    // but also stop pointing when the details modal is open
     useEffect(() => {
         if (modalOpen) {
             allArtworks.forEach(artwork => artwork.classList.add("pointer-inactive"))

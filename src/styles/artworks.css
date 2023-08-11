@@ -1,0 +1,85 @@
+#all-artworks {
+    margin: 100px 17px;
+    column-count: 4;
+    column-gap: 25px;
+}
+
+.each-artwork {
+    width: 100%;
+    margin-bottom: 25px;
+    break-inside: avoid-column;
+    cursor: pointer;
+}
+
+.pointer-inactive {
+    cursor: auto;
+}
+
+.tooltip {
+    display: none;
+    margin: 25px;
+    padding: 0 20px;
+    position: absolute;
+    z-index: 9;
+    max-width: 300px;
+    text-align: start;
+    background: var(--main-color);
+    color: #fff;
+}
+
+.each-artwork:hover .tooltip {
+    display: block;
+}
+
+.each-artwork-artist {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.each-artwork-title {
+    font-size: 23px;
+    font-style: italic;
+    font-weight: 700;
+    margin-top: -10px;
+}
+
+.each-artwork-date {
+    font-weight: 300;
+    font-style: normal;
+}
+
+.each-artwork-container {
+    position: relative;
+}
+
+.each-artwork-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.add-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 8px;
+    border-radius: 64px;
+    border: 1px solid #fff;
+    background: transparent;
+    cursor: pointer;
+    display: none;
+}
+
+.add-button > img {
+    height: 24px;
+    width: 24px;
+}
+
+.each-artwork-container:hover .add-button {
+    display: inline-flex;
+}
+
+.add-button:hover {
+    background: var(--main-color);
+}

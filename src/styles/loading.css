@@ -1,0 +1,30 @@
+#loading-container {
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#loading-text {
+    text-align: center;
+    font-size: 70px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+#progress-bar {
+    width: 300px;
+    height: 20px;
+    border-radius: 20px;
+    background: repeating-linear-gradient(135deg, #9747ff 0 10px, #fff 0 20px) 0/0% no-repeat,
+        repeating-linear-gradient(135deg, #ddd 0 10px, #eee 0 20px) 0/100%;
+    animation: progress 10s infinite;
+}
+
+@keyframes progress {
+    100% {
+        background-size: 100%;
+    }
+}

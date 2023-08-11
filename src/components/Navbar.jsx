@@ -4,6 +4,7 @@ import { useState } from "react"
 import About from "./About"
 
 function Navbar() {
+    // State to manage whether the "About" overlay is open or not
     const [aboutOpen, setAboutOpen] = useState(false)
 
     const openAbout = () => {

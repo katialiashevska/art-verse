@@ -1,22 +1,25 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
+import { useState } from "react"
 import exit from "../assets/exit.svg"
-import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
-import whiteArrow from "../assets/white-arrow.svg"
-import API_URL from "../utils/API_URL"
 import Toast from "./Toast"
+import "../styles/modal.css"
 
+// Props:
+// - artwork: the favourite artwork object to display
+// - onClose: function to close the modal
+// - onDelete: function to handle deletion from favourites
 function FavouriteDetails({ artwork, onClose, onDelete }) {
+    // State to track if the artwork is a favourite
     const [isFavourite, setIsFavourite] = useState(false)
+    // State to manage "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
 
-    const handleToggleFavourites = () => {
+    const deleteFavourites = () => {
         deleteFromFavourites(artwork.id)
             .then(() => {
                 setIsFavourite(false)
                 setShowRemoveToast(true)
+                // Hide the toast after 3 seconds
                 setTimeout(() => {
                     setShowRemoveToast(false)
                 }, 3000)
@@ -40,16 +43,10 @@ function FavouriteDetails({ artwork, onClose, onDelete }) {
                         alt="Exit icon"
                         onClick={onClose}
                     />
-                    <div className="modal-navigation">
-                        {/* <button className="modal-previous-button round-button">
-                            <img src={whiteArrow} alt="Arrow icon" />
-                        </button> */}
-                        <button className="modal-add-button" onClick={handleToggleFavourites}>
+                    <div className="modal-buttons">
+                        <button className="modal-add-remove-button" onClick={deleteFavourites}>
                             Remove from favourites
                         </button>
-                        {/* <button className="modal-next-button round-button">
-                            <img src={whiteArrow} alt="Arrow icon" />
-                        </button> */}
                     </div>
                     <div className="modal-card">
                         <p className="modal-artist">{artwork.artist}</p>
