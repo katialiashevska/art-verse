@@ -6,7 +6,7 @@ import blackArrow from "../assets/black-arrow.svg"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "../components/Toast"
-import ArtworkDetails from "../components/ArtworkDetails"
+import FavouriteDetails from "../components/FavouriteDetails"
 
 function FavouritesPage() {
     const [favouriteArtworks, setFavouriteArtworks] = useState([])
@@ -29,6 +29,16 @@ function FavouritesPage() {
                 }, 3000)
             })
             .catch(error => console.error(error.message))
+    }
+
+    const handleDeleteArtwork = () => {
+        setFavouriteArtworks(prevArtworks =>
+            prevArtworks.filter(artwork => artwork.id !== selectedArtwork.id)
+        )
+        setShowRemoveToast(true)
+        setTimeout(() => {
+            setShowRemoveToast(false)
+        }, 3000)
     }
 
     const openModal = artwork => {
@@ -95,7 +105,11 @@ function FavouritesPage() {
                                 Remove
                             </button>
                             {selectedArtwork && (
-                                <ArtworkDetails artwork={selectedArtwork} onClose={closeModal} />
+                                <FavouriteDetails
+                                    artwork={selectedArtwork}
+                                    onClose={closeModal}
+                                    onDelete={handleDeleteArtwork}
+                                />
                             )}
                         </article>
                     ))}
