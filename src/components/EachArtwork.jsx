@@ -97,8 +97,12 @@ function EachArtwork({ artwork }) {
             tooltip[i].style.top = e.pageY + "px"
         }
     }
-    // Attach the handleTooltip function to mousemove event
-    document.addEventListener("mousemove", handleTooltip, false)
+
+    // Attach the handleTooltip function to mousemove event & unmount
+    useEffect(() => {
+        document.addEventListener("mousemove", handleTooltip, false)
+        return () => document.removeEventListener("mousemove", handleTooltip)
+    })
 
     // Effect to handle the fact that the cursor needs to point to each artwork on homepage
     // but also stop pointing when the details modal is open
