@@ -22,7 +22,8 @@
 .toast {
     position: fixed;
     bottom: 30px;
-    left: 39vw;
+    left: 50%;
+    translate: -50% 0;
     display: inline-flex;
     padding: 16px 24px;
     align-items: flex-start;
