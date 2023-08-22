@@ -29,8 +29,8 @@ function EachArtwork({ artwork }) {
         axios
             .get(API_URL)
             .then(response => {
-                const favoriteIds = response.data.map(item => item.id)
-                if (favoriteIds.includes(eachArtwork?.id)) {
+                const favouriteIds = response.data.map(item => item.id)
+                if (favouriteIds.includes(eachArtwork?.id)) {
                     setIsFavourite(true)
                 }
             })

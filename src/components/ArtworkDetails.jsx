@@ -24,10 +24,10 @@ function ArtworkDetails({ artwork, onClose }) {
         axios
             .get(API_URL)
             .then(response => {
-                const isArtworkInFavorites = response.data.some(
-                    favorite => favorite.id === artwork.id
+                const isArtworkInFavourites = response.data.some(
+                    favourite => favourite.id === artwork.id
                 )
-                setIsFavourite(isArtworkInFavorites)
+                setIsFavourite(isArtworkInFavourites)
             })
             .catch(error => console.error(error.message))
     }, [artwork])
