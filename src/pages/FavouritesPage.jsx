@@ -108,15 +108,15 @@ function FavouritesPage() {
                                 onClick={() => deleteArtwork(artwork.id)}>
                                 Remove
                             </button>
-                            {selectedArtwork && (
-                                <FavouriteDetails
-                                    artwork={selectedArtwork}
-                                    onClose={closeModal}
-                                    onDelete={handleDeleteArtwork}
-                                />
-                            )}
                         </article>
                     ))}
+                {selectedArtwork && (
+                    <FavouriteDetails
+                        artwork={selectedArtwork}
+                        onClose={closeModal}
+                        onDelete={handleDeleteArtwork}
+                    />
+                )}
             </div>
         )
     )
