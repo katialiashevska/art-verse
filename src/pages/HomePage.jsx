@@ -8,35 +8,67 @@ import "../styles/artworks.css"
 
 function HomePage() {
     const [artworks, setArtworks] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    const [page, setPage] = useState(1)
+    const [isLoadingPage, setIsLoadingPage] = useState(true)
+    const [isLoadingData, setIsLoadingData] = useState(false)
 
     useEffect(() => {
+        setTimeout(() => {
+            setIsLoadingPage(false)
+        }, 5000)
+    }, [])
+
+    const fetchData = () => {
+        if (page > 30) {
+            return
+        }
+
+        setIsLoadingData(true)
+
         axios
-            .get("https://api.artic.edu/api/v1/artworks/search?q=modern&limit=100")
+            .get(`https://api.artic.edu/api/v1/artworks/search?q=modern&limit=100&page=${page}`)
             .then(response => {
-                // Simulate loading with a timeout (optional)
-                setTimeout(() => {
-                    setArtworks(response.data.data)
-                    setIsLoading(false)
-                }, 5000) // Simulate loading time (5 seconds)
+                setArtworks(previousArtworks => [...previousArtworks, ...response.data.data])
+                setPage(previousPage => previousPage + 1)
+                setIsLoadingData(false)
             })
             .catch(error => {
                 console.error(error.message)
-                setIsLoading(false)
+                setIsLoadingData(false)
             })
+    }
+
+    useEffect(() => {
+        fetchData()
     }, [])
 
+    const handleScroll = () => {
+        if (
+            window.innerHeight + document.documentElement.scrollTop !==
+                document.documentElement.offsetHeight ||
+            isLoadingData
+        ) {
+            return
+        }
+        fetchData()
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [isLoadingData])
+
     return (
-        artworks && (
+        artworks.length > 0 && (
             <div>
                 <Navbar />
-                {isLoading && (
+                {isLoadingPage && (
                     <div id="loading-container">
                         <p id="loading-text">Loading artworks</p>
                         <div id="progress-bar"></div>
                     </div>
                 )}
-                {!isLoading && (
+                {!isLoadingPage && (
                     <div id="all-artworks">
                         {artworks.map(artwork => (
                             <EachArtwork key={artwork.id} artwork={artwork} />

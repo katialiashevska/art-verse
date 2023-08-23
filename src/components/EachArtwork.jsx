@@ -90,7 +90,7 @@ function EachArtwork({ artwork }) {
 
             let leftPosition = e.pageX + 15
             if (leftPosition + tooltipWidth > pageWidth) {
-                leftPosition = e.pageX - tooltipWidth - 100
+                leftPosition = e.pageX - tooltipWidth - 60
             }
 
             tooltip[i].style.left = leftPosition + "px"
