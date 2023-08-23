@@ -114,6 +114,18 @@ function EachArtwork({ artwork }) {
         }
     }, [modalOpen, allArtworks])
 
+    // Checking that each displayed artwork has an image
+    const hasValidImage =
+        eachArtwork &&
+        eachArtwork.image_id &&
+        eachArtwork.thumbnail &&
+        eachArtwork.thumbnail.alt_text
+
+    if (!hasValidImage) {
+        // Return null to not render the artwork
+        return null
+    }
+
     return (
         eachArtwork && (
             <article className={`each-artwork ${modalOpen ? "pointer-inactive" : ""}`}>

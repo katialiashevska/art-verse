@@ -19,10 +19,6 @@ function HomePage() {
     }, [])
 
     const fetchData = () => {
-        if (page > 30) {
-            return
-        }
-
         setIsLoadingData(true)
 
         axios
@@ -46,7 +42,8 @@ function HomePage() {
         if (
             window.innerHeight + document.documentElement.scrollTop !==
                 document.documentElement.offsetHeight ||
-            isLoadingData
+            isLoadingData ||
+            artworks.length === 0
         ) {
             return
         }
@@ -54,9 +51,17 @@ function HomePage() {
     }
 
     useEffect(() => {
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [isLoadingData])
+        // Add or remove scroll event listener based on isLoadingData and artworks length
+        if (!isLoadingData && artworks.length > 0) {
+            window.addEventListener("scroll", handleScroll)
+        } else {
+            window.removeEventListener("scroll", handleScroll)
+        }
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+        }
+    }, [isLoadingData, artworks])
 
     return (
         artworks.length > 0 && (
