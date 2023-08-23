@@ -34,7 +34,7 @@
 .modal-buttons {
     display: flex;
     width: 352px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 

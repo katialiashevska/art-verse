@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import exit from "../assets/exit.svg"
 import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "./Toast"
-import "../styles/modal.css"
 import { PressEscape } from "./PressEscape"
+import "../styles/modal.css"
+import exit from "../assets/exit.svg"
+import arrowPrevious from "../assets/arrow-previous.svg"
+import arrowNext from "../assets/arrow-next.svg"
 
 function ArtworkDetails({ artwork, onClose }) {
     // State to track whether the artwork is in favourites or not
@@ -82,11 +84,13 @@ function ArtworkDetails({ artwork, onClose }) {
                         onClick={onClose}
                     />
                     <div className="modal-buttons">
+                        <img className="round-button" src={arrowPrevious} alt="Previous icon" />
                         <button
                             className="modal-add-remove-button"
                             onClick={handleToggleFavourites}>
                             {isFavourite ? "Remove from favourites" : "Add to favourites"}
                         </button>
+                        <img className="round-button" src={arrowNext} alt="Next icon" />
                     </div>
                     <div className="modal-card">
                         <p className="modal-artist">{artwork.artist_display}</p>

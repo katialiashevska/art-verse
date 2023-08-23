@@ -1,9 +1,11 @@
 import { useState } from "react"
-import exit from "../assets/exit.svg"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"
-import "../styles/modal.css"
 import { PressEscape } from "./PressEscape"
+import "../styles/modal.css"
+import exit from "../assets/exit.svg"
+import arrowPrevious from "../assets/arrow-previous.svg"
+import arrowNext from "../assets/arrow-next.svg"
 
 // Props:
 // - artwork: the favourite artwork object to display
@@ -47,9 +49,11 @@ function FavouriteDetails({ artwork, onClose, onDelete }) {
                         onClick={onClose}
                     />
                     <div className="modal-buttons">
+                        <img className="round-button" src={arrowPrevious} alt="Previous icon" />
                         <button className="modal-add-remove-button" onClick={deleteFavourites}>
                             Remove from favourites
                         </button>
+                        <img className="round-button" src={arrowNext} alt="Next icon" />
                     </div>
                     <div className="modal-card">
                         <p className="modal-artist">{artwork.artist}</p>
