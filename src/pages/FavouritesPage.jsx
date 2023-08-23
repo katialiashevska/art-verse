@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import logo from "../assets/logo.svg"
-import blackArrow from "../assets/black-arrow.svg"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "../components/Toast"
 import FavouriteDetails from "../components/FavouriteDetails"
 import "../styles/favourites.css"
+import logo from "../assets/logo.svg"
+import blackArrow from "../assets/black-arrow.svg"
 
 function FavouritesPage() {
     const [favouriteArtworks, setFavouriteArtworks] = useState([])
