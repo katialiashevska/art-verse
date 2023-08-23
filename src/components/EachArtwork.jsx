@@ -86,11 +86,11 @@ function EachArtwork({ artwork }) {
     const handleTooltip = e => {
         for (let i = 0; i <= tooltip.length; i++) {
             const tooltipWidth = tooltip[i].offsetWidth
-            const pageWidth = window.innerWidth
+            const pageWidth = window.innerWidth - 48
 
-            let leftPosition = e.pageX + 15
+            let leftPosition = e.pageX + 30
             if (leftPosition + tooltipWidth > pageWidth) {
-                leftPosition = e.pageX - tooltipWidth - 60
+                leftPosition = e.pageX - tooltipWidth - 70
             }
 
             tooltip[i].style.left = leftPosition + "px"
@@ -144,6 +144,7 @@ function EachArtwork({ artwork }) {
                         src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}
                         alt={eachArtwork.thumbnail.alt_text}
                         onClick={openModal}
+                        loading="lazy"
                     />
                     <button className="add-button" onClick={handleToggleFavourites}>
                         {isFavourite ? (
