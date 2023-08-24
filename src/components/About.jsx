@@ -17,17 +17,17 @@ function About({ onClose }) {
                 <h1>About Art-Verse</h1>
             </div>
             <p id="about-text">
-                Hi! My name is Katia and I created this app during my 2023 Ironhack bootcamp in
-                full-stack web development. I was inspired by{" "}
+                Hello! I'm Katia and I created this full-stack app during my Ironhack bootcamp in
+                2023. I was inspired by the incredible{" "}
                 <a
                     className="about-link"
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://artsandculture.google.com/">
                     Google&nbsp;Arts&nbsp;&&nbsp;Culture
-                </a>
-                , an amazing plaform used by everybody working in the art field on a daily basis.
-                Art-Verse allows you to view a catalogue of 100 modern art masterpieces from the
+                </a>{" "}
+                plaform, which has captured the hearts of art professionals and enthusiasts alike.
+                Art-Verse grants you access to an extensive catalogue of modern art pieces from the
                 collection of{" "}
                 <a
                     className="about-link"
@@ -35,8 +35,9 @@ function About({ onClose }) {
                     rel="noopener noreferrer"
                     href="https://www.artic.edu/">
                     The&nbsp;Art&nbsp;Institute&nbsp;of&nbsp;Chicago
-                </a>{" "}
-                and create a list of favourites. Check out my{" "}
+                </a>
+                . By signing up for an account, you can curate your personal list of favorites,
+                truly making the experience your own. You are welcome to check out my{" "}
                 <a
                     className="about-link"
                     target="_blank"

@@ -70,7 +70,7 @@ function FavouritesPage() {
                     <button id="logout-button" onClick={logOutUser}>
                         Log out
                     </button>
-                    <h1>My favourites</h1>
+                    <h1>{user.name}’s favourites</h1>
                 </div>
                 {showRemoveToast && <Toast message="Removed from favourites" />}
                 {favouriteArtworks.length === 0 && (
