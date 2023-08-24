@@ -52,7 +52,7 @@ function SignupPage(props) {
 
                 case "passwordConfirmation":
                     if (!value) {
-                        stateObj[name] = "Please enter your password"
+                        stateObj[name] = "Please re-enter your password"
                     }
                     break
 
@@ -71,7 +71,7 @@ function SignupPage(props) {
         // If the POST request is successful, redirect to the login page
         axios
             .post(`${BACKEND_URL}/auth/signup`, requestBody)
-            .then(response => {
+            .then(() => {
                 navigate("/login")
             })
             .catch(error => {

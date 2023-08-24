@@ -82,6 +82,9 @@
 }
 
 .back-button {
+    position: fixed;
+    top: 28px;
+    left: 28px;
     font-family: var(--main-font);
     display: flex;
     padding: 8px 16px;
@@ -94,6 +97,7 @@
     color: var(--black);
     font-size: 20px;
     font-weight: 500;
+    z-index: 11;
 }
 
 .back-button:hover {
@@ -103,6 +107,27 @@
 
 .back-button:hover #black-arrow {
     filter: invert(32%) sepia(75%) saturate(2995%) hue-rotate(249deg) brightness(98%) contrast(106%);
+}
+
+#logout-button {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 64px;
+    border: none;
+    color: var(--black);
+    font-family: var(--main-font);
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    background: var(--main-color);
+    color: #fff;
 }
 
 #favourites-header {

@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "../components/Toast"
 import FavouriteDetails from "../components/FavouriteDetails"
+import { AuthContext } from "../context/auth.context"
 import "../styles/favourites.css"
 import logo from "../assets/logo.svg"
 import blackArrow from "../assets/black-arrow.svg"
 
 function FavouritesPage() {
+    const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
+
     const [favouriteArtworks, setFavouriteArtworks] = useState([])
     // State to manage the display of "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
@@ -56,14 +59,17 @@ function FavouritesPage() {
     return (
         favouriteArtworks && (
             <div id="favourites">
+                <Link className="back-button" to="/">
+                    <img id="black-arrow" src={blackArrow} alt="Arrow icon" />
+                    Back
+                </Link>
                 <Link className="navbar-bg" to="/">
                     <img id="logo" src={logo} alt="ArtVerse logo" />
                 </Link>
                 <div id="favourites-header">
-                    <Link className="back-button" to="/">
-                        <img id="black-arrow" src={blackArrow} alt="Arrow icon" />
-                        Back
-                    </Link>
+                    <button id="logout-button" onClick={logOutUser}>
+                        Log out
+                    </button>
                     <h1>My favourites</h1>
                 </div>
                 {showRemoveToast && <Toast message="Removed from favourites" />}

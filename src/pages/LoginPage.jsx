@@ -1,16 +1,44 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import axios from "axios";
-import BACKEND_URL from "../utils/BACKEND_URL";
+import axios from "axios"
+import BACKEND_URL from "../utils/BACKEND_URL"
+import { AuthContext } from "../context/auth.context"
 import "../styles/login-signup.css"
 import logo from "../assets/logo.svg"
 
-function LoginPage() {
+function LoginPage(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
+
+    const navigate = useNavigate()
+
+    const { storeToken, authenticateUser } = useContext(AuthContext)
 
     const handleEmailInput = e => setEmail(e.target.value)
     const handlePasswordInput = e => setPassword(e.target.value)
+
+    const handleLoginSubmit = e => {
+        e.preventDefault()
+        const requestBody = { email, password }
+
+        axios
+            .post(`${BACKEND_URL}/auth/login`, requestBody)
+            .then(response => {
+                // Request to the server's endpoint `/auth/login` returns a response
+                // with the JWT string ->  response.data.authToken
+                console.log("JWT token", response.data.authToken)
+                storeToken(response.data.authToken)
+                // Verify the token by sending a request
+                // to the server's JWT validation endpoint.
+                authenticateUser()
+                navigate("/")
+            })
+            .catch(error => {
+                const errorDescription = error.response.data.message
+                setErrorMessage(errorDescription)
+            })
+    }
 
     return (
         <div id="login-page">
@@ -18,7 +46,7 @@ function LoginPage() {
                 <img id="logo" src={logo} alt="ArtVerse logo" />
             </Link>
             <h1 className="login-signup-title">Welcome back</h1>
-            <form className="login-signup-form" action="">
+            <form className="login-signup-form" onSubmit={handleLoginSubmit}>
                 <label htmlFor="email">Email address</label>
                 <input type="email" name="email" value={email} onChange={handleEmailInput} />
 
@@ -39,6 +67,7 @@ function LoginPage() {
                     </button>
                 </div>
             </form>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
     )
 }

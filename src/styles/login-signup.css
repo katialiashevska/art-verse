@@ -31,18 +31,19 @@
 }
 
 .login-signup-form label {
+    align-self: flex-start;
     color: var(--main-color);
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
-    margin-bottom: -18px;
+    margin-bottom: -20px;
 }
 
 .error-message {
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
-    margin-bottom: -18px;
+    margin-bottom: -16px;
 }
 
 .password-success-icon {
@@ -95,7 +96,6 @@
 .form-secondary-button:hover {
     background: var(--main-color);
     color: #fff;
-    border: 1px solid var(--main-color);
 }
 
 .form-secondary-button {

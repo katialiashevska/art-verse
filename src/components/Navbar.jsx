@@ -1,8 +1,9 @@
-import logo from "../assets/logo.svg"
 import { Link } from "react-router-dom"
 import { useState, useContext } from "react"
 import About from "./About"
 import { AuthContext } from "../context/auth.context"
+import "../styles/navbar.css"
+import logo from "../assets/logo.svg"
 
 function Navbar() {
     const { isLoggedIn, user } = useContext(AuthContext)
