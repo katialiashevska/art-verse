@@ -144,7 +144,6 @@ function EachArtwork({ artwork }) {
                         src={`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`}
                         alt={eachArtwork.thumbnail.alt_text}
                         onClick={openModal}
-                        loading="lazy"
                     />
                     <button className="add-button" onClick={handleToggleFavourites}>
                         {isFavourite ? (

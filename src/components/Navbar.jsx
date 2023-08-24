@@ -1,9 +1,12 @@
 import logo from "../assets/logo.svg"
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import About from "./About"
+import { AuthContext } from "../context/auth.context"
 
 function Navbar() {
+    const { isLoggedIn, user } = useContext(AuthContext)
+
     // State to manage whether the "About" overlay is open or not
     const [aboutOpen, setAboutOpen] = useState(false)
 
@@ -24,9 +27,16 @@ function Navbar() {
                 <Link to="/">
                     <img id="logo" src={logo} alt="ArtVerse logo" />
                 </Link>
-                <Link className="navbar-button" to="/favourites">
-                    My favourites
-                </Link>
+                {isLoggedIn && (
+                    <Link className="navbar-button" to="/favourites">
+                        My favourites
+                    </Link>
+                )}
+                {!isLoggedIn && (
+                    <Link className="navbar-button" to="/login">
+                        Log in
+                    </Link>
+                )}
             </div>
             {aboutOpen && <About onClose={closeAbout} />}
         </div>

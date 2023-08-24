@@ -1,7 +1,9 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import logo from "../assets/logo.svg"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios";
+import BACKEND_URL from "../utils/BACKEND_URL";
 import "../styles/login-signup.css"
+import logo from "../assets/logo.svg"
 
 function LoginPage() {
     const [email, setEmail] = useState("")
@@ -11,7 +13,7 @@ function LoginPage() {
     const handlePasswordInput = e => setPassword(e.target.value)
 
     return (
-        <div id="login">
+        <div id="login-page">
             <Link className="navbar-bg" to="/">
                 <img id="logo" src={logo} alt="ArtVerse logo" />
             </Link>

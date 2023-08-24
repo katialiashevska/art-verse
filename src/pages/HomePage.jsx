@@ -15,7 +15,7 @@ function HomePage() {
     useEffect(() => {
         setTimeout(() => {
             setIsLoadingPage(false)
-        }, 5000)
+        }, 7000)
     }, [])
 
     const fetchData = () => {
