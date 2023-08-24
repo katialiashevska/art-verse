@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import BACKEND_URL from "../utils/BACKEND_URL"
+import { AuthContext } from "../context/auth.context"
 import "../styles/login-signup.css"
 import logo from "../assets/logo.svg"
 import check from "../assets/check.svg"
@@ -13,9 +14,15 @@ function SignupPage(props) {
         password: "",
         passwordConfirmation: "",
     })
-    const [errorMessage, setErrorMessage] = useState("")
+    const [globalErrorMessage, setGlobalErrorMessage] = useState("")
+    const [inlineErrorMessage, setInlineErrorMessage] = useState("")
+
+    const [isPasswordValid, setIsPasswordValid] = useState(false)
+    const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
 
     const navigate = useNavigate()
+
+    const { storeToken, authenticateUser } = useContext(AuthContext)
 
     const onInputChange = e => {
         const { name, value } = e.target
@@ -28,7 +35,7 @@ function SignupPage(props) {
 
     const validateInput = e => {
         let { name, value } = e.target
-        setErrorMessage(prev => {
+        setInlineErrorMessage(prev => {
             const stateObj = { ...prev, [name]: "" }
 
             switch (name) {
@@ -47,12 +54,16 @@ function SignupPage(props) {
                 case "password":
                     if (!value) {
                         stateObj[name] = "Please enter a password"
+                    } else if (passwordRegex.test(value)) {
+                        setIsPasswordValid(true)
+                    } else {
+                        setIsPasswordValid(false)
                     }
                     break
 
                 case "passwordConfirmation":
                     if (!value) {
-                        stateObj[name] = "Please re-enter your password"
+                        stateObj[name] = "Please confirm your password"
                     }
                     break
 
@@ -67,16 +78,24 @@ function SignupPage(props) {
     const handleSignupSubmit = e => {
         e.preventDefault()
         const requestBody = { ...input }
+        setGlobalErrorMessage("")
 
         // If the POST request is successful, redirect to the login page
         axios
             .post(`${BACKEND_URL}/auth/signup`, requestBody)
-            .then(() => {
-                navigate("/login")
+            .then(response => {
+                // Request to the server's endpoint `/auth/login` returns a response
+                // with the JWT string ->  response.data.authToken
+                console.log("JWT token", response.data.authToken)
+                storeToken(response.data.authToken)
+                // Verify the token by sending a request
+                // to the server's JWT validation endpoint.
+                authenticateUser()
+                navigate("/")
             })
             .catch(error => {
                 const errorDescription = error.response.data.message
-                setErrorMessage(errorDescription)
+                setGlobalErrorMessage(errorDescription)
             })
     }
 
@@ -86,11 +105,12 @@ function SignupPage(props) {
                 <img id="logo" src={logo} alt="ArtVerse logo" />
             </Link>
             <h1 className="login-signup-title">Hello you</h1>
+            {globalErrorMessage && <div className="global-error">{globalErrorMessage}</div>}
             <form className="login-signup-form" onSubmit={handleSignupSubmit}>
                 <div className="label-flex">
                     <label htmlFor="name">Name</label>
-                    {errorMessage.name && (
-                        <span className="error-message">{errorMessage.name}</span>
+                    {inlineErrorMessage.name && (
+                        <span className="inline-error">{inlineErrorMessage.name}</span>
                     )}
                 </div>
                 <input
@@ -103,8 +123,8 @@ function SignupPage(props) {
 
                 <div className="label-flex">
                     <label htmlFor="email">Email address</label>
-                    {errorMessage.email && (
-                        <span className="error-message">{errorMessage.email}</span>
+                    {inlineErrorMessage.email && (
+                        <span className="inline-error">{inlineErrorMessage.email}</span>
                     )}
                 </div>
                 <input
@@ -117,12 +137,10 @@ function SignupPage(props) {
 
                 <div className="label-flex">
                     <label htmlFor="password">Password</label>
-                    {errorMessage.password && (
-                        <span className="error-message">{errorMessage.password}</span>
+                    {inlineErrorMessage.password && (
+                        <span className="inline-error">{inlineErrorMessage.password}</span>
                     )}
-                    {input.password && input.passwordConfirmation === input.password && (
-                        <img src={check} alt="Success" className="password-success-icon" />
-                    )}
+                    {isPasswordValid && <img src={check} alt="Success" className="success-icon" />}
                 </div>
                 <input
                     type="password"
@@ -134,11 +152,13 @@ function SignupPage(props) {
 
                 <div className="label-flex">
                     <label htmlFor="passwordConfirmation">Password confirmation</label>
-                    {errorMessage.passwordConfirmation && (
-                        <span className="error-message">{errorMessage.passwordConfirmation}</span>
+                    {inlineErrorMessage.passwordConfirmation && (
+                        <span className="inline-error">
+                            {inlineErrorMessage.passwordConfirmation}
+                        </span>
                     )}
                     {input.password && input.passwordConfirmation === input.password && (
-                        <img src={check} alt="Success" className="password-success-icon" />
+                        <img src={check} alt="Success" className="success-icon" />
                     )}
                 </div>
                 <input

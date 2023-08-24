@@ -46,6 +46,7 @@ function LoginPage(props) {
                 <img id="logo" src={logo} alt="ArtVerse logo" />
             </Link>
             <h1 className="login-signup-title">Welcome back</h1>
+            {errorMessage && <p className="global-error">{errorMessage}</p>}
             <form className="login-signup-form" onSubmit={handleLoginSubmit}>
                 <label htmlFor="email">Email address</label>
                 <input type="email" name="email" value={email} onChange={handleEmailInput} />
@@ -67,7 +68,6 @@ function LoginPage(props) {
                     </button>
                 </div>
             </form>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
     )
 }
