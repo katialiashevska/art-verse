@@ -7,6 +7,7 @@ import Toast from "../components/Toast"
 import FavouriteDetails from "../components/FavouriteDetails"
 import { AuthContext } from "../context/auth.context"
 import "../styles/favourites.css"
+import "../styles/toast.css"
 import logo from "../assets/logo.svg"
 import blackArrow from "../assets/black-arrow.svg"
 

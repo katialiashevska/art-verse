@@ -8,6 +8,7 @@ import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"
 import API_URL from "../utils/API_URL"
 import "../styles/artworks.css"
+import "../styles/toast.css"
 
 function EachArtwork({ artwork }) {
     // State to hold detailed artwork information
@@ -20,21 +21,35 @@ function EachArtwork({ artwork }) {
     const [showRemoveToast, setShowRemoveToast] = useState(false)
     // State to track artwork's favourite status
     const [isFavourite, setIsFavourite] = useState(false)
+    const [isValidImage, setIsValidImage] = useState(false)
 
     const tooltip = document.querySelectorAll(".tooltip")
     const allArtworks = [...document.querySelectorAll(".each-artwork")]
 
-    // Effect to check if the artwork is a favourite
     useEffect(() => {
-        axios
-            .get(API_URL)
-            .then(response => {
-                const favouriteIds = response.data.map(item => item.id)
-                if (favouriteIds.includes(eachArtwork?.id)) {
-                    setIsFavourite(true)
-                }
-            })
-            .catch(error => console.error(error.message))
+        if (eachArtwork) {
+            fetch(`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`)
+                .then(response => {
+                    setIsValidImage(response.ok)
+                })
+                .catch(() => {
+                    setIsValidImage(false)
+                })
+        }
+    }, [eachArtwork])
+
+    useEffect(() => {
+        if (eachArtwork) {
+            axios
+                .get(API_URL)
+                .then(response => {
+                    const favouriteIds = response.data.map(item => item.id)
+                    if (favouriteIds.includes(eachArtwork.id)) {
+                        setIsFavourite(true)
+                    }
+                })
+                .catch(error => console.error(error.message))
+        }
     }, [eachArtwork])
 
     // Effect to fetch detailed artwork information
@@ -114,20 +129,9 @@ function EachArtwork({ artwork }) {
         }
     }, [modalOpen, allArtworks])
 
-    // Checking that each displayed artwork has an image
-    const hasValidImage =
-        eachArtwork &&
-        eachArtwork.image_id &&
-        eachArtwork.thumbnail &&
-        eachArtwork.thumbnail.alt_text
-
-    if (!hasValidImage) {
-        // Return null to not render the artwork
-        return null
-    }
-
     return (
-        eachArtwork && (
+        eachArtwork &&
+        isValidImage && (
             <article className={`each-artwork ${modalOpen ? "pointer-inactive" : ""}`}>
                 <div className="tooltip">
                     <p className="each-artwork-artist">{eachArtwork.artist_title}</p>

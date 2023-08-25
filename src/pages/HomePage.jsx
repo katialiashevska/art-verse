@@ -7,16 +7,15 @@ import { AuthContext } from "../context/auth.context"
 import "../styles/navbar.css"
 import "../styles/loading.css"
 import "../styles/artworks.css"
+import "../styles/toast.css"
 
 function HomePage() {
     const [artworks, setArtworks] = useState([])
     const [page, setPage] = useState(1)
     const [isLoadingPage, setIsLoadingPage] = useState(true)
     const [isLoadingData, setIsLoadingData] = useState(false)
-
-    const { isLoggedIn, user } = useContext(AuthContext)
-
     const [showToast, setShowToast] = useState(false)
+    const { isLoggedIn, user } = useContext(AuthContext)
 
     useEffect(() => {
         setTimeout(() => {
@@ -46,7 +45,7 @@ function HomePage() {
         const firstTimeLoggedIn = localStorage.getItem("firstTimeLoggedIn")
         if (isLoggedIn && firstTimeLoggedIn === "true") {
             setShowToast(true)
-            localStorage.removeItem("firstTimeLoggedIn") // Clear the flag
+            localStorage.removeItem("firstTimeLoggedIn")
         }
     }, [isLoggedIn])
 
@@ -79,7 +78,7 @@ function HomePage() {
         artworks.length > 0 && (
             <div>
                 <Navbar />
-                {showToast && <Toast message={`Welcome back ${user.name}`} />}
+                {showToast && <Toast message={`Welcome ${user.name}`} />}
                 {isLoadingPage && (
                     <div id="loading-container">
                         <p id="loading-text">Loading artworks</p>
@@ -87,9 +86,9 @@ function HomePage() {
                     </div>
                 )}
                 {!isLoadingPage && (
-                    <div id="all-artworks">
-                        {artworks.map(artwork => (
-                            <EachArtwork key={artwork.id} artwork={artwork} />
+                    <div id="all-artworks" loading="lazy">
+                        {artworks.map((artwork, index) => (
+                            <EachArtwork key={index} artwork={artwork} />
                         ))}
                     </div>
                 )}

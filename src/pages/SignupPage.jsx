@@ -92,8 +92,8 @@ function SignupPage(props) {
                 axios
                     .post(`${BACKEND_URL}/auth/login`, loginCredentials)
                     .then(response => {
-                        console.log("JWT token", response.data.authToken)
                         storeToken(response.data.authToken)
+                        localStorage.setItem("firstTimeLoggedIn", "true")
                         authenticateUser()
                         navigate("/")
                     })
