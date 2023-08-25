@@ -26,7 +26,7 @@ function About({ onClose }) {
                     href="https://artsandculture.google.com/">
                     Google&nbsp;Arts&nbsp;&&nbsp;Culture
                 </a>{" "}
-                plaform, which has captured the hearts of art professionals and enthusiasts alike.
+                platform, which has captured the hearts of art professionals and enthusiasts alike.
                 Art-Verse grants you access to an extensive catalogue of modern art pieces from the
                 collection of{" "}
                 <a

@@ -54,6 +54,7 @@ function SignupPage(props) {
                 case "password":
                     if (!value) {
                         stateObj[name] = "Please enter a password"
+                        setIsPasswordValid(false)
                     } else if (passwordRegex.test(value)) {
                         setIsPasswordValid(true)
                     } else {
@@ -78,20 +79,28 @@ function SignupPage(props) {
     const handleSignupSubmit = e => {
         e.preventDefault()
         const requestBody = { ...input }
-        setGlobalErrorMessage("")
 
-        // If the POST request is successful, redirect to the login page
         axios
             .post(`${BACKEND_URL}/auth/signup`, requestBody)
-            .then(response => {
-                // Request to the server's endpoint `/auth/login` returns a response
-                // with the JWT string ->  response.data.authToken
-                console.log("JWT token", response.data.authToken)
-                storeToken(response.data.authToken)
-                // Verify the token by sending a request
-                // to the server's JWT validation endpoint.
-                authenticateUser()
-                navigate("/")
+            .then(() => {
+                // Log in the user immediately after successful signup
+                const loginCredentials = {
+                    email: input.email,
+                    password: input.password,
+                }
+
+                axios
+                    .post(`${BACKEND_URL}/auth/login`, loginCredentials)
+                    .then(response => {
+                        console.log("JWT token", response.data.authToken)
+                        storeToken(response.data.authToken)
+                        authenticateUser()
+                        navigate("/")
+                    })
+                    .catch(error => {
+                        const errorDescription = error.response.data.message
+                        setGlobalErrorMessage(errorDescription)
+                    })
             })
             .catch(error => {
                 const errorDescription = error.response.data.message
