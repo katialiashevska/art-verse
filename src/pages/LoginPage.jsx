@@ -29,6 +29,7 @@ function LoginPage(props) {
                 // with the JWT string ->  response.data.authToken
                 console.log("JWT token", response.data.authToken)
                 storeToken(response.data.authToken)
+                localStorage.setItem("firstTimeLoggedIn", "true")
                 // Verify the token by sending a request
                 // to the server's JWT validation endpoint.
                 authenticateUser()

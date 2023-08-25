@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import Navbar from "../components/Navbar"
 import EachArtwork from "../components/EachArtwork"
+import Toast from "../components/Toast"
+import { AuthContext } from "../context/auth.context"
 import "../styles/navbar.css"
 import "../styles/loading.css"
 import "../styles/artworks.css"
@@ -11,6 +13,10 @@ function HomePage() {
     const [page, setPage] = useState(1)
     const [isLoadingPage, setIsLoadingPage] = useState(true)
     const [isLoadingData, setIsLoadingData] = useState(false)
+
+    const { isLoggedIn, user } = useContext(AuthContext)
+
+    const [showToast, setShowToast] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {
@@ -36,7 +42,13 @@ function HomePage() {
 
     useEffect(() => {
         fetchData()
-    }, [])
+        // Check if it's the user's first time logging in
+        const firstTimeLoggedIn = localStorage.getItem("firstTimeLoggedIn")
+        if (isLoggedIn && firstTimeLoggedIn === "true") {
+            setShowToast(true)
+            localStorage.removeItem("firstTimeLoggedIn") // Clear the flag
+        }
+    }, [isLoggedIn])
 
     const handleScroll = () => {
         if (
@@ -67,6 +79,7 @@ function HomePage() {
         artworks.length > 0 && (
             <div>
                 <Navbar />
+                {showToast && <Toast message={`Welcome back ${user.name}`} />}
                 {isLoadingPage && (
                     <div id="loading-container">
                         <p id="loading-text">Loading artworks</p>
