@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import plus from "../assets/plus.svg"
-import minus from "../assets/minus.svg"
 import ArtworkDetails from "./ArtworkDetails"
 import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
@@ -9,6 +7,8 @@ import Toast from "./Toast"
 import API_URL from "../utils/API_URL"
 import "../styles/artworks.css"
 import "../styles/toast.css"
+import plus from "../assets/plus.svg"
+import minus from "../assets/minus.svg"
 
 function EachArtwork({ artwork }) {
     // State to hold detailed artwork information
@@ -54,8 +54,14 @@ function EachArtwork({ artwork }) {
 
     // Effect to fetch detailed artwork information
     useEffect(() => {
+        const authToken = localStorage.getItem("authToken")
+
         axios
-            .get(artwork.api_link)
+            .get(artwork.api_link, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
             .then(response => setEachArtwork(response.data.data))
             .catch(error => console.error(error.message))
     }, [artwork.api_link])

@@ -24,8 +24,14 @@ function ArtworkDetails({ artwork, onClose }) {
     // Fetch data from API to determine if the artwork is in favourites
     // when the artwork prop changes
     useEffect(() => {
+        const authToken = localStorage.getItem("authToken")
+
         axios
-            .get(API_URL)
+            .get(API_URL, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
             .then(response => {
                 const isArtworkInFavourites = response.data.some(
                     favourite => favourite.id === artwork.id

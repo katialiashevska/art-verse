@@ -21,8 +21,14 @@ function FavouritesPage() {
     const [selectedArtwork, setSelectedArtwork] = useState(null)
 
     useEffect(() => {
+        const authToken = localStorage.getItem("authToken")
+
         axios
-            .get(API_URL)
+            .get(API_URL, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
             .then(response => setFavouriteArtworks(response.data))
             .catch(error => console.error(error.message))
     }, [])
@@ -89,7 +95,7 @@ function FavouritesPage() {
                                 <div className="favourites-img-container">
                                     <img
                                         className="favourites-img"
-                                        src={artwork.img}
+                                        src={artwork.image}
                                         alt={artwork.altText}
                                         onClick={() => openModal(artwork)}
                                     />

@@ -40,7 +40,7 @@ function FavouriteDetails({ artwork, onClose, onDelete }) {
             <div className="modal-content">
                 {showRemoveToast && <Toast message="Removed from favourites" />}
                 <div className="modal-img-container">
-                    <img src={artwork.img} alt={artwork.altText} className="modal-img" />
+                    <img src={artwork.image} alt={artwork.altText} className="modal-img" />
                 </div>
                 <div className="modal-info-container">
                     <img

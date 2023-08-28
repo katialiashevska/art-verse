@@ -36,7 +36,7 @@ function About({ onClose }) {
                     href="https://www.artic.edu/">
                     The&nbsp;Art&nbsp;Institute&nbsp;of&nbsp;Chicago
                 </a>
-                . By signing up for an account, you can curate your personal list of favorites,
+                . By signing up for an account, you can curate your personal list of favourites,
                 truly making the experience your own. You are welcome to check out my{" "}
                 <a
                     className="about-link"

@@ -1,4 +1,5 @@
 import axios from "axios"
+import API_URL from "./API_URL"
 
 export const addToFavourites = (artwork, setIsFavourite) => {
     const newArtwork = {
@@ -9,11 +10,18 @@ export const addToFavourites = (artwork, setIsFavourite) => {
         medium: artwork.medium_display,
         dimensions: artwork.dimensions,
         altText: artwork.thumbnail.alt_text,
-        img: `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`,
+        image: `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`,
+        comment: "",
     }
 
+    const authToken = localStorage.getItem("authToken")
+
     return axios
-        .post("https://art-verse-backend.adaptable.app/favouriteArtworks", newArtwork)
+        .post(API_URL, newArtwork, {
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        })
         .then(() => {
             setIsFavourite(true)
         })
