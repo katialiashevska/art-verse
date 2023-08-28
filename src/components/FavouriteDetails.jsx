@@ -21,7 +21,7 @@ function FavouriteDetails({ artwork, onClose, onDelete }) {
     PressEscape(onClose)
 
     const deleteFavourites = () => {
-        deleteFromFavourites(artwork.id)
+        deleteFromFavourites(artwork._id)
             .then(() => {
                 setIsFavourite(false)
                 setShowRemoveToast(true)

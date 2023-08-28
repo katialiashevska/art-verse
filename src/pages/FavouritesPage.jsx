@@ -47,7 +47,7 @@ function FavouritesPage() {
     // Function to update state after a deletion of an artwork
     const handleDeleteArtwork = () => {
         setFavouriteArtworks(prevArtworks =>
-            prevArtworks.filter(artwork => artwork.id !== selectedArtwork.id)
+            prevArtworks.filter(artwork => artwork._id !== selectedArtwork._id)
         )
         setShowRemoveToast(true)
         setTimeout(() => {
@@ -90,7 +90,7 @@ function FavouritesPage() {
                 )}
                 {favouriteArtworks.length > 0 &&
                     favouriteArtworks.map(artwork => (
-                        <article key={artwork.id} className="favourites-artwork-container">
+                        <article key={artwork._id} className="favourites-artwork-container">
                             <div className="favourites-flex">
                                 <div className="favourites-img-container">
                                     <img
@@ -118,7 +118,7 @@ function FavouritesPage() {
                             </div>
                             <button
                                 className="favourites-button remove"
-                                onClick={() => deleteArtwork(artwork.id)}>
+                                onClick={() => deleteArtwork(artwork._id)}>
                                 Remove
                             </button>
                         </article>

@@ -86,9 +86,9 @@ function HomePage() {
                     </div>
                 )}
                 {!isLoadingPage && (
-                    <div id="all-artworks" loading="lazy">
-                        {artworks.map((artwork, index) => (
-                            <EachArtwork key={index} artwork={artwork} />
+                    <div id="all-artworks">
+                        {artworks.map(artwork => (
+                            <EachArtwork key={artwork.id} artwork={artwork} />
                         ))}
                     </div>
                 )}

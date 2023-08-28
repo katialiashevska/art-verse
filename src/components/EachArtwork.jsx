@@ -39,11 +39,16 @@ function EachArtwork({ artwork }) {
     }, [eachArtwork])
 
     useEffect(() => {
+        const authToken = localStorage.getItem("authToken")
         if (eachArtwork) {
             axios
-                .get(API_URL)
+                .get(API_URL, {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                })
                 .then(response => {
-                    const favouriteIds = response.data.map(item => item.id)
+                    const favouriteIds = response.data.map(artwork => artwork.id)
                     if (favouriteIds.includes(eachArtwork.id)) {
                         setIsFavourite(true)
                     }
