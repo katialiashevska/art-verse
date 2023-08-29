@@ -3,6 +3,7 @@ import API_URL from "./API_URL"
 
 export const addToFavourites = (artwork, setIsFavourite) => {
     const newArtwork = {
+        id: artwork.id,
         title: artwork.title,
         artist: artwork.artist_display,
         date: artwork.date_display,

@@ -34,7 +34,7 @@ function ArtworkDetails({ artwork, onClose }) {
             })
             .then(response => {
                 const isArtworkInFavourites = response.data.some(
-                    favourite => favourite._id === artwork._id
+                    favourite => favourite.id === artwork.id
                 )
                 setIsFavourite(isArtworkInFavourites)
             })
@@ -45,7 +45,7 @@ function ArtworkDetails({ artwork, onClose }) {
     // to display all the info accordingly
     const handleToggleFavourites = () => {
         if (isFavourite) {
-            deleteFromFavourites(artwork._id)
+            deleteFromFavourites(artwork.id)
                 .then(() => {
                     setIsFavourite(false)
                     setShowRemoveToast(true)

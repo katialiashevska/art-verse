@@ -47,7 +47,7 @@ function FavouritesPage() {
     // Function to update state after a deletion of an artwork
     const handleDeleteArtwork = () => {
         setFavouriteArtworks(prevArtworks =>
-            prevArtworks.filter(artwork => artwork._id !== selectedArtwork._id)
+            prevArtworks.filter(artwork => artwork.id !== selectedArtwork.id)
         )
         setShowRemoveToast(true)
         setTimeout(() => {
@@ -62,6 +62,33 @@ function FavouritesPage() {
     const closeModal = () => {
         setSelectedArtwork(null)
     }
+
+    const deleteComment = artwork => {
+        const updatedArtworks = favouriteArtworks.map(item => {
+            if (item.id === artwork.id) {
+                return { ...item, comment: "" };
+            }
+            return item;
+        });
+        setFavouriteArtworks(updatedArtworks);
+    };
+
+    const saveComment = artwork => {
+        const authToken = localStorage.getItem("authToken");
+    
+        axios
+            .put(`${API_URL}/${artwork.id}`, { comment: artwork.comment }, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
+            .then(response => {
+                console.log("Comment saved successfully:", response.data);
+            })
+            .catch(error => {
+                console.error("Error saving comment:", error.message);
+            });
+    };    
 
     return (
         favouriteArtworks && (
@@ -90,7 +117,7 @@ function FavouritesPage() {
                 )}
                 {favouriteArtworks.length > 0 &&
                     favouriteArtworks.map(artwork => (
-                        <article key={artwork._id} className="favourites-artwork-container">
+                        <article key={artwork.id} className="favourites-artwork-container">
                             <div className="favourites-flex">
                                 <div className="favourites-img-container">
                                     <img
@@ -118,9 +145,39 @@ function FavouritesPage() {
                             </div>
                             <button
                                 className="favourites-button remove"
-                                onClick={() => deleteArtwork(artwork._id)}>
+                                onClick={() => deleteArtwork(artwork.id)}>
                                 Remove
                             </button>
+                            {/* <div className="favourites-comment-container">
+                                <textarea
+                                    className="favourites-comment"
+                                    name="comment"
+                                    rows="5"
+                                    cols="15"
+                                    value={artwork.comment}
+                                    onChange={event => {
+                                        const updatedArtworks = favouriteArtworks.map(item => {
+                                            if (item.id === artwork.id) {
+                                                return { ...item, comment: event.target.value }
+                                            }
+                                            return item
+                                        })
+                                        setFavouriteArtworks(updatedArtworks)
+                                    }}
+                                />
+                                <div className="comment-buttons">
+                                    <button
+                                        className="favourites-button delete-comment"
+                                        onClick={() => deleteComment(artwork)}>
+                                        Delete
+                                    </button>
+                                    <button
+                                        className="favourites-button save-comment"
+                                        onClick={() => saveComment(artwork)}>
+                                        Save
+                                    </button>
+                                </div> */}
+                            {/* </div> */}
                         </article>
                     ))}
                 {selectedArtwork && (

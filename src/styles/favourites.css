@@ -184,3 +184,29 @@
 .favourites-text-container p {
     margin-bottom: 1px;
 }
+
+.favourites-comment-container {
+    width: 200px;
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    border: 1px solid var(--main-color);
+    background: #fff;
+    padding: 20px;
+}
+
+.favourites-comment {
+    align-self: stretch;
+    font-family: var(--main-font);
+    color: var(--main-color);
+    caret-color: var(--main-color);
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+}

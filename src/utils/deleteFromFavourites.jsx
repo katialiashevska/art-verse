@@ -12,7 +12,7 @@ export const deleteFromFavourites = (artworkId, setFavouriteArtworks) => {
         })
         .then(() => {
             console.log(artworkId)
-            setFavouriteArtworks(artworks => artworks.filter(artwork => artwork._id !== artworkId))
+            setFavouriteArtworks(artworks => artworks.filter(artwork => artwork.id !== artworkId))
         })
         .catch(error => {
             console.error("Error deleting artwork:", error)

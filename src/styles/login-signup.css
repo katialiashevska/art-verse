@@ -69,6 +69,10 @@
     line-height: 24px;
 }
 
+.login-signup-form input:focus {
+    border: 1px solid var(--main-color);
+}
+
 .form-buttons {
     display: flex;
     justify-content: space-between;
