@@ -41,7 +41,7 @@
 .favourites-button.remove {
     position: absolute;
     top: 32px;
-    right: 32px;
+    right: 0;
 }
 
 #favourites {
@@ -144,7 +144,7 @@
 }
 
 .favourites-title {
-    font-size: 33px;
+    font-size: 30px;
     font-style: italic;
     font-weight: 700;
 }
@@ -174,7 +174,7 @@
 .favourites-text-container {
     text-align: start;
     height: 380px;
-    width: 600px;
+    width: 500px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -187,12 +187,13 @@
 
 .favourites-comment-container {
     width: 200px;
+    max-height: 200px;
     position: absolute;
-    bottom: 32px;
-    right: 32px;
-    border: 1px solid var(--main-color);
+    bottom: 25px;
+    right: 0;
     background: #fff;
     padding: 20px;
+    border: 1px solid var(--main-color);
 }
 
 .favourites-comment {
@@ -209,4 +210,15 @@
     -moz-box-shadow: none;
     box-shadow: none;
     resize: none;
+}
+
+.comment-buttons {
+    display: flex;
+    width: 200px;
+    height: 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 8px;
+    align-self: stretch;
 }

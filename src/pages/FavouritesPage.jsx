@@ -12,7 +12,7 @@ import logo from "../assets/logo.svg"
 import blackArrow from "../assets/black-arrow.svg"
 
 function FavouritesPage() {
-    const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
+    const { user, logOutUser } = useContext(AuthContext)
 
     const [favouriteArtworks, setFavouriteArtworks] = useState([])
     // State to manage the display of "Removed from favourites" toast
@@ -63,32 +63,53 @@ function FavouritesPage() {
         setSelectedArtwork(null)
     }
 
+    const startEditing = artwork => {
+        const updatedArtworks = favouriteArtworks.map(item => {
+            if (item.id === artwork.id) {
+                return { ...item, editing: true }
+            }
+            return item
+        })
+        setFavouriteArtworks(updatedArtworks)
+    }
+
     const deleteComment = artwork => {
         const updatedArtworks = favouriteArtworks.map(item => {
             if (item.id === artwork.id) {
-                return { ...item, comment: "" };
+                return { ...item, comment: "", editing: false }
             }
-            return item;
-        });
-        setFavouriteArtworks(updatedArtworks);
-    };
+            return item
+        })
+        setFavouriteArtworks(updatedArtworks)
+    }
 
     const saveComment = artwork => {
-        const authToken = localStorage.getItem("authToken");
-    
+        const authToken = localStorage.getItem("authToken")
+
         axios
-            .put(`${API_URL}/${artwork.id}`, { comment: artwork.comment }, {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
-            })
+            .put(
+                `${API_URL}/${artwork.id}`,
+                { comment: artwork.comment },
+                {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                }
+            )
             .then(response => {
-                console.log("Comment saved successfully:", response.data);
+                const updatedArtworks = favouriteArtworks.map(item => {
+                    if (item.id === artwork.id) {
+                        return { ...item, editing: false }
+                    }
+                    return item
+                })
+                setFavouriteArtworks(updatedArtworks)
+                console.log("Comment saved successfully:", response.data)
             })
             .catch(error => {
-                console.error("Error saving comment:", error.message);
-            });
-    };    
+                console.error("Error saving comment:", error.message)
+            })
+    }
 
     return (
         favouriteArtworks && (
@@ -148,36 +169,106 @@ function FavouritesPage() {
                                 onClick={() => deleteArtwork(artwork.id)}>
                                 Remove
                             </button>
-                            {/* <div className="favourites-comment-container">
-                                <textarea
-                                    className="favourites-comment"
-                                    name="comment"
-                                    rows="5"
-                                    cols="15"
-                                    value={artwork.comment}
-                                    onChange={event => {
-                                        const updatedArtworks = favouriteArtworks.map(item => {
-                                            if (item.id === artwork.id) {
-                                                return { ...item, comment: event.target.value }
-                                            }
-                                            return item
-                                        })
-                                        setFavouriteArtworks(updatedArtworks)
-                                    }}
-                                />
-                                <div className="comment-buttons">
-                                    <button
-                                        className="favourites-button delete-comment"
-                                        onClick={() => deleteComment(artwork)}>
-                                        Delete
-                                    </button>
-                                    <button
-                                        className="favourites-button save-comment"
-                                        onClick={() => saveComment(artwork)}>
-                                        Save
-                                    </button>
-                                </div> */}
-                            {/* </div> */}
+
+                            <div className="favourites-comment-container">
+                                {artwork.comment && (
+                                    <>
+                                        {artwork.editing ? (
+                                            <>
+                                                <textarea
+                                                    className="favourites-comment"
+                                                    name="comment"
+                                                    rows="6"
+                                                    cols="15"
+                                                    value={artwork.comment}
+                                                    onChange={event => {
+                                                        const updatedArtworks =
+                                                            favouriteArtworks.map(item => {
+                                                                if (item.id === artwork.id) {
+                                                                    return {
+                                                                        ...item,
+                                                                        comment: event.target.value,
+                                                                    }
+                                                                }
+                                                                return item
+                                                            })
+                                                        setFavouriteArtworks(updatedArtworks)
+                                                    }}
+                                                />
+                                                <div className="comment-buttons">
+                                                    <button
+                                                        className="favourites-button delete-comment"
+                                                        onClick={() => deleteComment(artwork)}>
+                                                        Delete
+                                                    </button>
+                                                    <button
+                                                        className="favourites-button save-comment"
+                                                        onClick={() => saveComment(artwork)}>
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <p className="favourites-comment">
+                                                    {artwork.comment}
+                                                </p>
+                                                <button
+                                                    className="favourites-button edit-comment"
+                                                    onClick={() => startEditing(artwork)}>
+                                                    Edit
+                                                </button>
+                                            </>
+                                        )}
+                                    </>
+                                )}
+                                {!artwork.comment && (
+                                    <>
+                                        {artwork.editing ? (
+                                            <>
+                                                <textarea
+                                                    className="favourites-comment"
+                                                    name="comment"
+                                                    rows="6"
+                                                    cols="15"
+                                                    value={artwork.comment}
+                                                    onChange={event => {
+                                                        const updatedArtworks =
+                                                            favouriteArtworks.map(item => {
+                                                                if (item.id === artwork.id) {
+                                                                    return {
+                                                                        ...item,
+                                                                        comment: event.target.value,
+                                                                    }
+                                                                }
+                                                                return item
+                                                            })
+                                                        setFavouriteArtworks(updatedArtworks)
+                                                    }}
+                                                />
+                                                <div className="comment-buttons">
+                                                    <button
+                                                        className="favourites-button delete-comment"
+                                                        onClick={() => deleteComment(artwork)}>
+                                                        Delete
+                                                    </button>
+                                                    <button
+                                                        className="favourites-button save-comment"
+                                                        onClick={() => saveComment(artwork)}>
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <button
+                                                className="favourites-button add-comment"
+                                                onClick={() => startEditing(artwork)}>
+                                                Add a comment
+                                            </button>
+                                        )}
+                                    </>
+                                )}
+                            </div>
                         </article>
                     ))}
                 {selectedArtwork && (
