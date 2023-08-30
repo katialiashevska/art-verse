@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
 import IsPrivate from "./components/IsPrivate"
 import IsAnon from "./components/IsAnon"
+import ErrorPage from "./pages/ErrorPage"
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
                         </IsAnon>
                     }
                 />
+                <Route path="*" element={<ErrorPage />} />
             </Routes>
         </div>
     )

@@ -16,7 +16,7 @@
     font-weight: 700;
 }
 
-button {
+#favourites button {
     display: flex;
     padding: 8px 16px;
     justify-content: center;
@@ -28,10 +28,9 @@ button {
     background: transparent;
     cursor: pointer;
     text-decoration: none;
-    border: 1px solid transparent;
 }
 
-button:hover {
+#favourites button:hover {
     color: #fff !important;
     background: var(--main-color);
     border: 1px solid transparent;
@@ -40,6 +39,26 @@ button:hover {
 .favourites-button {
     border: 1px solid var(--black);
     color: var(--black);
+}
+
+.favourites-button.add {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 64px;
+    font-family: var(--main-font);
+    font-size: 20px;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.favourites-button.add:hover {
+    color: #fff !important;
+    background: var(--main-color);
+    border: 1px solid transparent;
 }
 
 .favourites-button.remove {
@@ -176,7 +195,7 @@ button:hover {
 
 .favourites-comment-container {
     width: 200px;
-    max-height: 150px;
+    height: 150px;
     position: absolute;
     bottom: 25px;
     right: 0;
@@ -221,8 +240,16 @@ button:hover {
 .save-edit-comment-button {
     border: 1px solid var(--black);
     color: var(--black);
+    display: none;
 }
 
 .delete-comment-button {
     color: var(--black);
+    border: 1px solid transparent;
+    display: none;
+}
+
+.favourites-comment-container:hover .save-edit-comment-button,
+.favourites-comment-container:hover .delete-comment-button {
+    display: block;
 }

@@ -1,0 +1,38 @@
+#error-page {
+    background: linear-gradient(180deg, rgba(151, 71, 255, 0) 0%, var(--main-color) 100%);
+    position: absolute;
+    left: 0;
+    height: 70vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#error-title {
+    color: var(--black);
+    text-align: center;
+    font-size: 76px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+#error-back-button {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 64px;
+    border: 1px solid var(--black);
+    color: var(--black);
+    font-family: var(--main-font);
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+#error-back-button:hover {
+    color: #fff !important;
+    background: var(--main-color);
+    border: 1px solid transparent;
+}
