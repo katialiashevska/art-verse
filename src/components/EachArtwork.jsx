@@ -105,7 +105,7 @@ function EachArtwork({ artwork }) {
     // Function to handle tooltip position on the page
     const handleTooltip = e => {
         for (let i = 0; i <= tooltip.length; i++) {
-            const tooltipWidth = tooltip[i].offsetWidth
+            const tooltipWidth = tooltip[i]?.offsetWidth
             const pageWidth = window.innerWidth - 48
 
             let leftPosition = e.pageX + 30

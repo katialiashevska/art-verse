@@ -16,31 +16,35 @@
     font-weight: 700;
 }
 
-.favourites-button {
-    font-family: var(--main-font);
+button {
     display: flex;
     padding: 8px 16px;
     justify-content: center;
     align-items: center;
     border-radius: 64px;
-    border: 1px solid var(--black);
+    font-family: var(--main-font);
     font-size: 20px;
     font-weight: 500;
     background: transparent;
     cursor: pointer;
-    color: var(--black);
     text-decoration: none;
+    border: 1px solid transparent;
 }
 
-.favourites-button:hover {
-    color: #fff;
+button:hover {
+    color: #fff !important;
     background: var(--main-color);
-    border: #fff;
+    border: 1px solid transparent;
+}
+
+.favourites-button {
+    border: 1px solid var(--black);
+    color: var(--black);
 }
 
 .favourites-button.remove {
     position: absolute;
-    top: 32px;
+    top: 25px;
     right: 0;
 }
 
@@ -82,21 +86,22 @@
 }
 
 .back-button {
-    position: fixed;
-    top: 28px;
-    left: 28px;
-    font-family: var(--main-font);
     display: flex;
     padding: 8px 16px;
     justify-content: center;
     align-items: center;
-    gap: 8px;
     border-radius: 64px;
-    border: 1px solid var(--black);
-    text-decoration: none;
-    color: var(--black);
+    font-family: var(--main-font);
     font-size: 20px;
     font-weight: 500;
+    background: transparent;
+    text-decoration: none;
+    position: fixed;
+    top: 28px;
+    left: 28px;
+    gap: 8px;
+    border: 1px solid var(--black);
+    color: var(--black);
     z-index: 11;
 }
 
@@ -110,24 +115,8 @@
 }
 
 #logout-button {
-    display: flex;
-    padding: 8px 16px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 64px;
     border: none;
     color: var(--black);
-    font-family: var(--main-font);
-    font-size: 20px;
-    font-weight: 500;
-    text-decoration: none;
-    background: transparent;
-    cursor: pointer;
-}
-
-#logout-button:hover {
-    background: var(--main-color);
-    color: #fff;
 }
 
 #favourites-header {
@@ -187,12 +176,15 @@
 
 .favourites-comment-container {
     width: 200px;
-    max-height: 200px;
+    max-height: 150px;
     position: absolute;
     bottom: 25px;
     right: 0;
     background: #fff;
     padding: 20px;
+}
+
+.favourites-comment-container:has(textarea) {
     border: 1px solid var(--main-color);
 }
 
@@ -213,12 +205,24 @@
 }
 
 .comment-buttons {
-    display: flex;
     width: 200px;
-    height: 40px;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 8px;
-    align-self: stretch;
+    justify-content: space-between;
+}
+
+.add-comment-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.save-edit-comment-button {
+    border: 1px solid var(--black);
+    color: var(--black);
+}
+
+.delete-comment-button {
+    color: var(--black);
 }
