@@ -2,7 +2,8 @@
     background: linear-gradient(180deg, rgba(151, 71, 255, 0) 0%, var(--main-color) 100%);
     position: absolute;
     left: 0;
-    height: 70vh;
+    top: 25vh;
+    height: 75vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -11,7 +12,6 @@
 
 #error-title {
     color: var(--black);
-    text-align: center;
     font-size: 76px;
     font-style: italic;
     font-weight: 700;
@@ -35,4 +35,11 @@
     color: #fff !important;
     background: var(--main-color);
     border: 1px solid transparent;
+}
+
+#error-image {
+    height: 90%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

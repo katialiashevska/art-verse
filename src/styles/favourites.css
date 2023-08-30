@@ -240,16 +240,16 @@
 .save-edit-comment-button {
     border: 1px solid var(--black);
     color: var(--black);
-    display: none;
+    display: none !important;
 }
 
 .delete-comment-button {
     color: var(--black);
     border: 1px solid transparent;
-    display: none;
+    display: none !important;
 }
 
 .favourites-comment-container:hover .save-edit-comment-button,
 .favourites-comment-container:hover .delete-comment-button {
-    display: block;
+    display: flex !important;
 }
