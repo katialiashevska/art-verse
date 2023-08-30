@@ -33,7 +33,8 @@ function LoginPage(props) {
                 navigate("/")
             })
             .catch(error => {
-                const errorDescription = error.response.data.message
+                const errorDescription = error?.response?.data?.message
+                console.log(error)
                 setErrorMessage(errorDescription)
             })
     }
