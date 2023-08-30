@@ -1,3 +1,3 @@
-const BACKEND_URL = "http://localhost:5005"
+const BACKEND_URL = "https://art-verse-server.onrender.com"
 
 export default BACKEND_URL
