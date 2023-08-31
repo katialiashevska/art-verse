@@ -20,7 +20,7 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
     // State to manage "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(index)
-    const [currentArtwork, setCurrentArtwork] = useState(favouriteArtworks[index])
+    const [currentArtwork, setCurrentArtwork] = useState(artwork)
 
     const authToken = localStorage.getItem("authToken")
 
@@ -45,6 +45,8 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
     const handleNextClick = () => {
         const nextIndex = (currentIndex + 1) % favouriteArtworks.length
         setCurrentIndex(nextIndex)
+        const nextArtwork = favouriteArtworks[nextIndex]
+        setCurrentArtwork(nextArtwork)
         axios
             .get(`${API_URL}/${favouriteArtworks[nextIndex].id}`, {
                 headers: {
@@ -61,6 +63,8 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
     const handlePreviousClick = () => {
         const prevIndex = (currentIndex - 1 + favouriteArtworks.length) % favouriteArtworks.length
         setCurrentIndex(prevIndex)
+        const prevArtwork = favouriteArtworks[prevIndex]
+        setCurrentArtwork(prevArtwork)
         axios
             .get(`${API_URL}/${favouriteArtworks[prevIndex].id}`, {
                 headers: {
@@ -103,7 +107,7 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
                 setTimeout(() => {
                     setShowRemoveToast(false)
                 }, 3000)
-                onDelete()
+                onDelete(currentArtwork.id)
                 onClose()
             })
             .catch(error => console.error(error.message))

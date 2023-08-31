@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react"
+import { Link } from "react-router-dom"
 import axios from "axios"
 import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
@@ -162,6 +163,13 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
                                 className="modal-add-remove-button"
                                 onClick={handleToggleFavourites}>
                                 {isFavourite ? "Remove from favourites" : "Add to favourites"}
+                            </button>
+                        )}
+                        {!isLoggedIn && (
+                            <button className="modal-add-remove-button">
+                                <Link className="login-redirect" to="/login">
+                                    Add to favourites
+                                </Link>
                             </button>
                         )}
                         <img

@@ -53,9 +53,9 @@ function FavouritesPage() {
     }
 
     // Function to update state after a deletion of an artwork
-    const handleDeleteArtwork = () => {
+    const handleDeleteArtwork = (artworkId) => {
         setFavouriteArtworks(prevArtworks =>
-            prevArtworks.filter(artwork => artwork.id !== selectedArtwork.id)
+            prevArtworks.filter(artwork => artwork.id !== artworkId)
         )
         setShowRemoveToast(true)
         setTimeout(() => {
