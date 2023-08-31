@@ -11,7 +11,6 @@ export const deleteFromFavourites = (artworkId, setFavouriteArtworks) => {
             },
         })
         .then(() => {
-            console.log(artworkId)
             setFavouriteArtworks(artworks => artworks.filter(artwork => artwork.id !== artworkId))
         })
         .catch(error => {

@@ -31,7 +31,13 @@ function FavouritesPage() {
                     Authorization: `Bearer ${authToken}`,
                 },
             })
-            .then(response => setFavouriteArtworks(response.data))
+            .then(response => {
+                const artworksWithIndex = response.data.map((artwork, index) => ({
+                    ...artwork,
+                    index: index,
+                }))
+                setFavouriteArtworks(artworksWithIndex)
+            })
             .catch(error => console.error(error.message))
     }, [])
 
@@ -167,8 +173,10 @@ function FavouritesPage() {
                                     <div className="favourites-upper-text">
                                         <p className="favourites-artist">{artwork.artist}</p>
                                         <p className="favourites-title">
-                                            {artwork.title},{" "}
-                                            <span className="favourites-date">{artwork.date}</span>
+                                            {artwork.title}
+                                            <span className="favourites-date">
+                                                , {artwork.date}
+                                            </span>
                                         </p>
                                     </div>
                                     <div className="favourites-lower-text">
@@ -295,6 +303,8 @@ function FavouritesPage() {
                         artwork={selectedArtwork}
                         onClose={closeModal}
                         onDelete={handleDeleteArtwork}
+                        favouriteArtworks={favouriteArtworks}
+                        index={selectedArtwork.index}
                     />
                 )}
             </div>

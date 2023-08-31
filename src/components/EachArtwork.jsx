@@ -11,7 +11,7 @@ import "../styles/toast.css"
 import plus from "../assets/plus.svg"
 import minus from "../assets/minus.svg"
 
-function EachArtwork({ artwork }) {
+function EachArtwork({ artwork, index, artworks }) {
     // State to hold detailed artwork information
     const [eachArtwork, setEachArtwork] = useState(null)
     // State to manage modal display
@@ -144,8 +144,8 @@ function EachArtwork({ artwork }) {
                 <div className="tooltip">
                     <p className="each-artwork-artist">{eachArtwork.artist_title}</p>
                     <p className="each-artwork-title">
-                        {eachArtwork.title},{" "}
-                        <span className="each-artwork-date">{eachArtwork.date_display}</span>
+                        {eachArtwork.title}
+                        <span className="each-artwork-date">, {eachArtwork.date_display}</span>
                     </p>
                 </div>
                 <div className="each-artwork-container">
@@ -167,7 +167,14 @@ function EachArtwork({ artwork }) {
                         </button>
                     )}
                 </div>
-                {modalOpen && <ArtworkDetails artwork={eachArtwork} onClose={closeModal} />}
+                {modalOpen && (
+                    <ArtworkDetails
+                        artwork={eachArtwork}
+                        onClose={closeModal}
+                        index={index}
+                        artworks={artworks}
+                    />
+                )}
             </article>
         )
     )

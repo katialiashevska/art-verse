@@ -12,13 +12,15 @@ import exit from "../assets/exit.svg"
 import arrowPrevious from "../assets/arrow-previous.svg"
 import arrowNext from "../assets/arrow-next.svg"
 
-function ArtworkDetails({ artwork, onClose }) {
+function ArtworkDetails({ artwork, onClose, index, artworks }) {
     // State to track whether the artwork is in favourites or not
     const [isFavourite, setIsFavourite] = useState(false)
     // State to manage the display of "Added to favourites" toast
     const [showAddToast, setShowAddToast] = useState(false)
     // State to manage the display of "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    const [currentIndex, setCurrentIndex] = useState(index)
+    const [currentArtwork, setCurrentArtwork] = useState(artworks[index])
 
     const { isLoggedIn } = useContext(AuthContext)
 
@@ -36,19 +38,74 @@ function ArtworkDetails({ artwork, onClose }) {
                 },
             })
             .then(response => {
-                const isArtworkInFavourites = response.data.some(
-                    favourite => favourite.id === artwork.id
-                )
-                setIsFavourite(isArtworkInFavourites)
+                const favouriteIds = response.data.map(artwork => artwork.id)
+                if (favouriteIds.includes(artwork.id)) {
+                    setIsFavourite(true)
+                }
             })
             .catch(error => console.error(error.message))
     }, [artwork])
+
+    useEffect(() => {
+        // Fetch artwork details for the currently displayed artwork
+        axios
+            .get(artworks[currentIndex].api_link)
+            .then(response => {
+                // Update currentArtwork state with the fetched data
+                setCurrentArtwork(response.data.data)
+            })
+            .catch(error => console.error(error.message))
+    }, [artworks, currentIndex])
+
+    const handleNextClick = () => {
+        const nextIndex = (currentIndex + 1) % artworks.length
+        setCurrentIndex(nextIndex)
+        axios
+            .get(artworks[nextIndex].api_link)
+            .then(response => {
+                // Update currentArtwork state with the fetched data
+                setCurrentArtwork(response.data.data)
+            })
+            .catch(error => console.error(error.message))
+    }
+
+    const handlePreviousClick = () => {
+        const prevIndex = (currentIndex - 1 + artworks.length) % artworks.length
+        setCurrentIndex(prevIndex)
+        axios
+            .get(artworks[prevIndex].api_link)
+            .then(response => {
+                // Update currentArtwork state with the fetched data
+                setCurrentArtwork(response.data.data)
+            })
+            .catch(error => console.error(error.message))
+    }
+
+    useEffect(() => {
+        const handleKeyDown = event => {
+            if (event.key === "ArrowLeft") {
+                // Handle "Previous" action
+                handlePreviousClick()
+            } else if (event.key === "ArrowRight") {
+                // Handle "Next" action
+                handleNextClick()
+            }
+        }
+
+        // Attach the event listener
+        window.addEventListener("keydown", handleKeyDown)
+
+        // Remove the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown)
+        }
+    }, [currentIndex])
 
     // Function to handle toggling artwork's favourite status
     // to display all the info accordingly
     const handleToggleFavourites = () => {
         if (isFavourite) {
-            deleteFromFavourites(artwork.id)
+            deleteFromFavourites(currentArtwork.id)
                 .then(() => {
                     setIsFavourite(false)
                     setShowRemoveToast(true)
@@ -59,7 +116,7 @@ function ArtworkDetails({ artwork, onClose }) {
                 })
                 .catch(error => console.error(error.message))
         } else {
-            addToFavourites(artwork)
+            addToFavourites(currentArtwork)
                 .then(() => {
                     setIsFavourite(true)
                     setShowAddToast(true)
@@ -81,8 +138,8 @@ function ArtworkDetails({ artwork, onClose }) {
                 {showRemoveToast && <Toast message="Removed from favourites" />}
                 <div className="modal-img-container">
                     <img
-                        src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-                        alt={artwork.thumbnail.alt_text}
+                        src={`https://www.artic.edu/iiif/2/${currentArtwork.image_id}/full/843,/0/default.jpg`}
+                        alt={currentArtwork.thumbnail.alt_text}
                         className="modal-img"
                     />
                 </div>
@@ -94,7 +151,12 @@ function ArtworkDetails({ artwork, onClose }) {
                         onClick={onClose}
                     />
                     <div className="modal-buttons">
-                        <img className="round-button" src={arrowPrevious} alt="Previous icon" />
+                        <img
+                            className="round-button"
+                            src={arrowPrevious}
+                            alt="Previous icon"
+                            onClick={handlePreviousClick}
+                        />
                         {isLoggedIn && (
                             <button
                                 className="modal-add-remove-button"
@@ -102,16 +164,21 @@ function ArtworkDetails({ artwork, onClose }) {
                                 {isFavourite ? "Remove from favourites" : "Add to favourites"}
                             </button>
                         )}
-                        <img className="round-button" src={arrowNext} alt="Next icon" />
+                        <img
+                            className="round-button"
+                            src={arrowNext}
+                            alt="Next icon"
+                            onClick={handleNextClick}
+                        />
                     </div>
                     <div className="modal-card">
-                        <p className="modal-artist">{artwork.artist_display}</p>
+                        <p className="modal-artist">{currentArtwork.artist_display}</p>
                         <p className="modal-title">
-                            {artwork.title},{" "}
-                            <span className="modal-date">{artwork.date_display}</span>
+                            {currentArtwork.title}
+                            <span className="modal-date">, {currentArtwork.date_display}</span>
                         </p>
-                        <p className="modal-medium">{artwork.medium_display}</p>
-                        <p className="modal-dimensions">{artwork.dimensions}</p>
+                        <p className="modal-medium">{currentArtwork.medium_display}</p>
+                        <p className="modal-dimensions">{currentArtwork.dimensions}</p>
                     </div>
                 </div>
             </div>
