@@ -11,7 +11,7 @@ export const addToFavourites = (artwork, setIsFavourite) => {
         dimensions: artwork.dimensions,
         altText: artwork.thumbnail.alt_text,
         image: `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`,
-        comment: "",
+        note: "",
     }
 
     const authToken = localStorage.getItem("authToken")

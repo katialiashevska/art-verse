@@ -17,12 +17,12 @@ function FavouritesPage() {
     const [showRemoveToast, setShowRemoveToast] = useState(false)
     // State to manage selected artwork for modal
     const [selectedArtwork, setSelectedArtwork] = useState(null)
-    const [comment, setComment] = useState("")
+    const [note, setNote] = useState("")
+
+    const handleNote = e => setNote(e.target.value)
 
     const { user, logOutUser } = useContext(AuthContext)
     const authToken = localStorage.getItem("authToken")
-
-    const handleComment = e => setComment(e.target.value)
 
     useEffect(() => {
         axios
@@ -65,11 +65,11 @@ function FavouritesPage() {
         setSelectedArtwork(null)
     }
 
-    const saveComment = artwork => {
+    const saveNote = artwork => {
         axios
             .put(
                 `${API_URL}/${artwork.id}`,
-                { comment: comment },
+                { note: note },
                 {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
@@ -79,19 +79,19 @@ function FavouritesPage() {
             .then(() => {
                 const updatedArtworks = favouriteArtworks.map(favouriteArtwork => {
                     if (favouriteArtwork.id === artwork.id) {
-                        return { ...favouriteArtwork, comment: comment, editing: false }
+                        return { ...favouriteArtwork, note: note, editing: false }
                     }
                     return favouriteArtwork
                 })
                 setFavouriteArtworks(updatedArtworks)
             })
             .catch(error => {
-                console.error("Error editing a comment:", error.message)
+                console.error("Error saving a note:", error.message)
             })
     }
 
-    const editComment = artwork => {
-        setComment(artwork.comment)
+    const editNote = artwork => {
+        setNote(artwork.note)
         const updatedArtworks = favouriteArtworks.map(favouriteArtwork => {
             if (favouriteArtwork.id === artwork.id) {
                 return { ...favouriteArtwork, editing: true }
@@ -101,11 +101,11 @@ function FavouritesPage() {
         setFavouriteArtworks(updatedArtworks)
     }
 
-    const deleteComment = artwork => {
+    const deleteNote = artwork => {
         axios
             .put(
                 `${API_URL}/${artwork.id}`,
-                { comment: "" },
+                { note: "" },
                 {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
@@ -115,14 +115,14 @@ function FavouritesPage() {
             .then(() => {
                 const updatedArtworks = favouriteArtworks.map(favouriteArtwork => {
                     if (favouriteArtwork.id === artwork.id) {
-                        return { ...favouriteArtwork, comment: "", editing: false }
+                        return { ...favouriteArtwork, note: "", editing: false }
                     }
                     return favouriteArtwork
                 })
                 setFavouriteArtworks(updatedArtworks)
             })
             .catch(error => {
-                console.error("Error deleting a comment:", error.message)
+                console.error("Error deleting a note:", error.message)
             })
     }
 
@@ -185,139 +185,103 @@ function FavouritesPage() {
                                 Remove
                             </button>
 
-                            <div className="favourites-comment-container">
-                                {artwork.comment && (
+                            <div className="favourites-note-container">
+                                {artwork.editing && (
+                                    <textarea
+                                        rows="4"
+                                        cols="16"
+                                        className="favourites-note"
+                                        type="text"
+                                        name="note"
+                                        value={note}
+                                        onChange={handleNote}
+                                        onKeyDown={e => {
+                                            if (e.key === "Enter" && !e.shiftKey) {
+                                                // Prevent a new line from being entered
+                                                e.preventDefault()
+                                                saveNote(artwork)
+                                            }
+                                        }}
+                                        ref={textareaRef => {
+                                            if (artwork.editing && textareaRef) {
+                                                // Focus the textarea if it's in editing mode
+                                                if (!textareaRef.hasFocus) {
+                                                    textareaRef.focus()
+                                                    textareaRef.setSelectionRange(
+                                                        textareaRef.value.length,
+                                                        textareaRef.value.length
+                                                    )
+                                                    textareaRef.hasFocus = true
+                                                }
+                                            }
+                                        }}
+                                        onBlur={e => {
+                                            // Reset the hasFocus flag when textarea loses focus
+                                            e.target.hasFocus = false
+                                        }}
+                                        autoFocus
+                                    />
+                                )}
+                                {artwork.note && !artwork.editing && (
+                                    <textarea
+                                        rows="4"
+                                        cols="16"
+                                        className="favourites-note"
+                                        type="text"
+                                        name="note"
+                                        value={artwork.note}
+                                        onChange={handleNote}
+                                        readOnly
+                                    />
+                                )}
+                                {artwork.note && (
+                                    <div className="note-buttons">
+                                        <button
+                                            className="delete-note-button"
+                                            onClick={() => deleteNote(artwork)}
+                                            type="button">
+                                            Delete
+                                        </button>
+                                        {artwork.editing ? (
+                                            <button
+                                                className="save-edit-note-button"
+                                                onClick={() => saveNote(artwork)}
+                                                type="button">
+                                                Save
+                                            </button>
+                                        ) : (
+                                            <button
+                                                className="save-edit-note-button"
+                                                onClick={() => editNote(artwork)}
+                                                type="button">
+                                                Edit
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
+                                {!artwork.note && (
                                     <>
                                         {artwork.editing ? (
-                                            <textarea
-                                                rows="4"
-                                                cols="16"
-                                                className="favourites-comment"
-                                                type="text"
-                                                name="comment"
-                                                value={comment}
-                                                onChange={handleComment}
-                                                onKeyDown={e => {
-                                                    if (e.key === "Enter" && !e.shiftKey) {
-                                                        // Prevent a new line from being entered
-                                                        e.preventDefault()
-                                                        saveComment(artwork)
-                                                    }
-                                                }}
-                                                ref={textareaRef => {
-                                                    if (artwork.editing && textareaRef) {
-                                                        // Focus the textarea if it's in editing mode
-                                                        if (!textareaRef.hasFocus) {
-                                                            textareaRef.focus()
-                                                            textareaRef.setSelectionRange(
-                                                                textareaRef.value.length,
-                                                                textareaRef.value.length
-                                                            )
-                                                            textareaRef.hasFocus = true
-                                                        }
-                                                    }
-                                                }}
-                                                onBlur={e => {
-                                                    // Reset the hasFocus flag when textarea loses focus
-                                                    e.target.hasFocus = false
-                                                }}
-                                                autoFocus
-                                            />
-                                        ) : (
-                                            <textarea
-                                                rows="4"
-                                                cols="16"
-                                                className="favourites-comment"
-                                                type="text"
-                                                name="comment"
-                                                value={artwork.comment}
-                                                onChange={handleComment}
-                                            />
-                                        )}
-                                        <div className="comment-buttons">
-                                            <button
-                                                className="delete-comment-button"
-                                                onClick={() => deleteComment(artwork)}
-                                                type="button">
-                                                Delete
-                                            </button>
-                                            {artwork.editing ? (
+                                            <div className="note-buttons">
                                                 <button
-                                                    className="save-edit-comment-button"
-                                                    onClick={() => saveComment(artwork)}
+                                                    className="delete-note-button"
+                                                    onClick={() => deleteNote(artwork)}
+                                                    type="button">
+                                                    Delete
+                                                </button>
+                                                <button
+                                                    className="save-edit-note-button"
+                                                    onClick={() => saveNote(artwork)}
                                                     type="button">
                                                     Save
                                                 </button>
-                                            ) : (
-                                                <button
-                                                    className="save-edit-comment-button"
-                                                    onClick={() => editComment(artwork)}
-                                                    type="button">
-                                                    Edit
-                                                </button>
-                                            )}
-                                        </div>
-                                    </>
-                                )}
-                                {!artwork.comment && (
-                                    <>
-                                        {artwork.editing ? (
-                                            <>
-                                                <textarea
-                                                    rows="4"
-                                                    cols="16"
-                                                    className="favourites-comment"
-                                                    type="text"
-                                                    name="comment"
-                                                    value={comment}
-                                                    onChange={handleComment}
-                                                    onKeyDown={e => {
-                                                        if (e.key === "Enter" && !e.shiftKey) {
-                                                            // Prevent a new line from being entered
-                                                            e.preventDefault()
-                                                            saveComment(artwork)
-                                                        }
-                                                    }}
-                                                    ref={textareaRef => {
-                                                        if (artwork.editing && textareaRef) {
-                                                            // Focus the textarea if it's in editing mode
-                                                            if (!textareaRef.hasFocus) {
-                                                                textareaRef.focus()
-                                                                textareaRef.setSelectionRange(
-                                                                    textareaRef.value.length,
-                                                                    textareaRef.value.length
-                                                                )
-                                                                textareaRef.hasFocus = true
-                                                            }
-                                                        }
-                                                    }}
-                                                    onBlur={e => {
-                                                        // Reset the hasFocus flag when textarea loses focus
-                                                        e.target.hasFocus = false
-                                                    }}
-                                                    autoFocus
-                                                />
-                                                <div className="comment-buttons">
-                                                    <button
-                                                        className="delete-comment-button"
-                                                        onClick={() => deleteComment(artwork)}
-                                                        type="button">
-                                                        Delete
-                                                    </button>
-                                                    <button
-                                                        className="save-edit-comment-button"
-                                                        onClick={() => saveComment(artwork)}
-                                                        type="button">
-                                                        Save
-                                                    </button>
-                                                </div>
-                                            </>
+                                            </div>
                                         ) : (
                                             <button
-                                                className="add-comment-button"
-                                                onClick={() => editComment(artwork)}
+                                                className="add-note-button"
+                                                onClick={() => editNote(artwork)}
                                                 type="button">
-                                                Add a comment
+                                                Add a note
                                             </button>
                                         )}
                                     </>

@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import ArtworkDetails from "./ArtworkDetails"
 import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import Toast from "./Toast"
 import API_URL from "../utils/API_URL"
+import { AuthContext } from "../context/auth.context"
 import "../styles/artworks.css"
 import "../styles/toast.css"
 import plus from "../assets/plus.svg"
@@ -22,6 +23,8 @@ function EachArtwork({ artwork }) {
     // State to track artwork's favourite status
     const [isFavourite, setIsFavourite] = useState(false)
     const [isValidImage, setIsValidImage] = useState(false)
+
+    const { isLoggedIn } = useContext(AuthContext)
 
     const tooltip = document.querySelectorAll(".tooltip")
     const allArtworks = [...document.querySelectorAll(".each-artwork")]
@@ -154,13 +157,15 @@ function EachArtwork({ artwork }) {
                         alt={eachArtwork.thumbnail.alt_text}
                         onClick={openModal}
                     />
-                    <button className="add-button" onClick={handleToggleFavourites}>
-                        {isFavourite ? (
-                            <img src={minus} alt="Minus icon" />
-                        ) : (
-                            <img src={plus} alt="Plus icon" />
-                        )}
-                    </button>
+                    {isLoggedIn && (
+                        <button className="add-button" onClick={handleToggleFavourites}>
+                            {isFavourite ? (
+                                <img src={minus} alt="Minus icon" />
+                            ) : (
+                                <img src={plus} alt="Plus icon" />
+                            )}
+                        </button>
+                    )}
                 </div>
                 {modalOpen && <ArtworkDetails artwork={eachArtwork} onClose={closeModal} />}
             </article>

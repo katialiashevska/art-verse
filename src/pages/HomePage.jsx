@@ -15,7 +15,7 @@ function HomePage() {
     const [isLoadingPage, setIsLoadingPage] = useState(true)
     const [isLoadingData, setIsLoadingData] = useState(false)
     const [showToast, setShowToast] = useState(false)
-    
+
     const { isLoggedIn, user } = useContext(AuthContext)
 
     useEffect(() => {

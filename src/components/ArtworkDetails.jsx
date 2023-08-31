@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import { addToFavourites } from "../utils/addToFavourites"
 import { deleteFromFavourites } from "../utils/deleteFromFavourites"
 import API_URL from "../utils/API_URL"
 import Toast from "./Toast"
 import { PressEscape } from "./PressEscape"
+import { AuthContext } from "../context/auth.context"
 import "../styles/modal.css"
 import "../styles/toast.css"
 import exit from "../assets/exit.svg"
@@ -18,6 +19,8 @@ function ArtworkDetails({ artwork, onClose }) {
     const [showAddToast, setShowAddToast] = useState(false)
     // State to manage the display of "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+
+    const { isLoggedIn } = useContext(AuthContext)
 
     PressEscape(onClose)
 
@@ -92,11 +95,13 @@ function ArtworkDetails({ artwork, onClose }) {
                     />
                     <div className="modal-buttons">
                         <img className="round-button" src={arrowPrevious} alt="Previous icon" />
-                        <button
-                            className="modal-add-remove-button"
-                            onClick={handleToggleFavourites}>
-                            {isFavourite ? "Remove from favourites" : "Add to favourites"}
-                        </button>
+                        {isLoggedIn && (
+                            <button
+                                className="modal-add-remove-button"
+                                onClick={handleToggleFavourites}>
+                                {isFavourite ? "Remove from favourites" : "Add to favourites"}
+                            </button>
+                        )}
                         <img className="round-button" src={arrowNext} alt="Next icon" />
                     </div>
                     <div className="modal-card">
