@@ -49,30 +49,11 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
             .catch(error => console.error(error.message))
     }, [currentArtwork])
 
-    const checkIfArtworkIsFavourite = async artworkId => {
-        try {
-            const authToken = localStorage.getItem("authToken")
-
-            const response = await axios.get(API_URL, {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
-            })
-
-            const favouriteIds = response.data.map(artwork => artwork.id)
-            favouriteIds.includes(artworkId) ? true : false
-        } catch (error) {
-            console.error(error.message)
-            return false
-        }
-    }
-
     useEffect(() => {
         // Fetch artwork details for the currently displayed artwork
         axios
             .get(artworks[currentIndex].api_link)
             .then(response => {
-                // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data.data)
             })
             .catch(error => console.error(error.message))
@@ -84,9 +65,7 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
         axios
             .get(artworks[nextIndex].api_link)
             .then(response => {
-                // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data.data)
-                setIsFavourite(checkIfArtworkIsFavourite(response.data.data.id))
             })
             .catch(error => console.error(error.message))
     }
@@ -97,9 +76,7 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
         axios
             .get(artworks[prevIndex].api_link)
             .then(response => {
-                // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data.data)
-                setIsFavourite(checkIfArtworkIsFavourite(response.data.data.id)) // Implement this function
             })
             .catch(error => console.error(error.message))
     }
@@ -107,15 +84,12 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
     useEffect(() => {
         const handleKeyDown = event => {
             if (event.key === "ArrowLeft") {
-                // Handle "Previous" action
                 handlePreviousClick()
             } else if (event.key === "ArrowRight") {
-                // Handle "Next" action
                 handleNextClick()
             }
         }
 
-        // Attach the event listener
         window.addEventListener("keydown", handleKeyDown)
 
         // Remove the event listener when the component unmounts
@@ -132,7 +106,6 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
                 .then(() => {
                     setIsFavourite(false)
                     setShowRemoveToast(true)
-                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowRemoveToast(false)
                     }, 3000)
@@ -143,7 +116,6 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
                 .then(() => {
                     setIsFavourite(true)
                     setShowAddToast(true)
-                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowAddToast(false)
                     }, 3000)

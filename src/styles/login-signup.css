@@ -5,7 +5,17 @@
     align-items: center;
 }
 
-.login-signup-title {
+.login-title {
+    color: var(--black);
+    text-align: center;
+    font-size: 76px;
+    font-style: italic;
+    font-weight: 700;
+    margin-top: 170px;
+    margin-bottom: 40px;
+}
+
+.signup-title {
     color: var(--black);
     text-align: center;
     font-size: 76px;

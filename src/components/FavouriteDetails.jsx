@@ -26,7 +26,6 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
 
     PressEscape(onClose)
 
-    // Inside FavouriteDetails component
     useEffect(() => {
         // Fetch artwork details for the currently displayed artwork
         axios
@@ -36,7 +35,6 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
                 },
             })
             .then(response => {
-                // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data)
             })
             .catch(error => console.error(error.message))
@@ -54,7 +52,6 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
                 },
             })
             .then(response => {
-                // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data)
             })
             .catch(error => console.error(error.message))
@@ -72,7 +69,6 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
                 },
             })
             .then(response => {
-                // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data)
             })
             .catch(error => console.error(error.message))
@@ -81,15 +77,12 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
     useEffect(() => {
         const handleKeyDown = event => {
             if (event.key === "ArrowLeft") {
-                // Handle "Previous" action
                 handlePreviousClick()
             } else if (event.key === "ArrowRight") {
-                // Handle "Next" action
                 handleNextClick()
             }
         }
 
-        // Attach the event listener
         window.addEventListener("keydown", handleKeyDown)
 
         // Remove the event listener when the component unmounts
@@ -103,7 +96,6 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
             .then(() => {
                 setIsFavourite(false)
                 setShowRemoveToast(true)
-                // Hide the toast after 3 seconds
                 setTimeout(() => {
                     setShowRemoveToast(false)
                 }, 3000)

@@ -81,7 +81,6 @@ function EachArtwork({ artwork, index, artworks }) {
                 .then(() => {
                     setIsFavourite(false)
                     setShowRemoveToast(true)
-                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowRemoveToast(false)
                     }, 3000)
@@ -94,7 +93,6 @@ function EachArtwork({ artwork, index, artworks }) {
                 .then(() => {
                     setIsFavourite(true)
                     setShowAddToast(true)
-                    // Hide the toast after 3 seconds
                     setTimeout(() => {
                         setShowAddToast(false)
                     }, 3000)

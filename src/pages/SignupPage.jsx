@@ -113,7 +113,7 @@ function SignupPage(props) {
             <Link className="navbar-bg" to="/">
                 <img id="logo" src={logo} alt="ArtVerse logo" />
             </Link>
-            <h1 className="login-signup-title">Hello you</h1>
+            <h1 className="signup-title">Hello you</h1>
             {globalErrorMessage && <div className="global-error">{globalErrorMessage}</div>}
             <form className="login-signup-form" onSubmit={handleSignupSubmit}>
                 <div className="label-flex">

@@ -44,7 +44,7 @@ function LoginPage(props) {
             <Link className="navbar-bg" to="/">
                 <img id="logo" src={logo} alt="ArtVerse logo" />
             </Link>
-            <h1 className="login-signup-title">Welcome back</h1>
+            <h1 className="login-title">Welcome back</h1>
             {errorMessage && <p className="global-error">{errorMessage}</p>}
             <form className="login-signup-form" onSubmit={handleLoginSubmit}>
                 <label htmlFor="email">Email address</label>
