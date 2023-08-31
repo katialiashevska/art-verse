@@ -40,12 +40,32 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
             })
             .then(response => {
                 const favouriteIds = response.data.map(artwork => artwork.id)
-                if (favouriteIds.includes(artwork.id)) {
+                if (favouriteIds.includes(currentArtwork.id)) {
                     setIsFavourite(true)
+                } else {
+                    setIsFavourite(false)
                 }
             })
             .catch(error => console.error(error.message))
-    }, [artwork])
+    }, [currentArtwork])
+
+    const checkIfArtworkIsFavourite = async artworkId => {
+        try {
+            const authToken = localStorage.getItem("authToken")
+
+            const response = await axios.get(API_URL, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
+
+            const favouriteIds = response.data.map(artwork => artwork.id)
+            favouriteIds.includes(artworkId) ? true : false
+        } catch (error) {
+            console.error(error.message)
+            return false
+        }
+    }
 
     useEffect(() => {
         // Fetch artwork details for the currently displayed artwork
@@ -66,6 +86,7 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
             .then(response => {
                 // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data.data)
+                setIsFavourite(checkIfArtworkIsFavourite(response.data.data.id))
             })
             .catch(error => console.error(error.message))
     }
@@ -78,6 +99,7 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
             .then(response => {
                 // Update currentArtwork state with the fetched data
                 setCurrentArtwork(response.data.data)
+                setIsFavourite(checkIfArtworkIsFavourite(response.data.data.id)) // Implement this function
             })
             .catch(error => console.error(error.message))
     }
