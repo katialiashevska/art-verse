@@ -18,8 +18,12 @@ It is integrated with a [public external API](https://api.artic.edu/docs/) kindl
 
 -   Infinite scroll through all the artworks on the home page and see their basic info on a simple hover thanks to the dynamic tooltip
 -   Check the details and the large format image of each artwork in a dedicated modal by clicking on it from the home page as well as from the favourites page
--   Sign up or log in to add artworks to your favourites, save and edit personalised notes on each of them from your profile
+-   Sign up or log in to add artworks to your favourites, as well as save and edit personalised notes on each of them from your profile
 
 ## Demo
 
 [Art-Verse](https://art-verse.netlify.app/ "Art-Verse")
+
+### Note to self
+
+When working on the app again in the future, the path in BACKEND_URL.jsx file needs to be changed to "http://localhost:5005" to run locally and then changed back to the current path for deployment.
