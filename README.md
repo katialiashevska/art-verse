@@ -9,10 +9,10 @@ My app grants you access to an extensive catalogue of modern art pieces from the
 
 ## Tech stack
 
-This full-stack application that was built using the MERN stack (MongoDB, Express.js, React.js and Node.js).
-This is the front-end of the app which was created with React.js.
-The back-end of the app is accesible via the art-verse-server repo on my account.
+This full-stack application was built using the MERN stack (MongoDB, Express.js, React.js & Node.js).
 It is integrated with a [public external API](https://api.artic.edu/docs/) kindly provided by The Art Institute of Chicago.
+This is the front-end of the app which was created with React.js.
+The back-end of the app is accesible via the _art-verse-server_ repo.
 
 ## Features
 
@@ -24,6 +24,8 @@ It is integrated with a [public external API](https://api.artic.edu/docs/) kindl
 
 [Art-Verse](https://art-verse.netlify.app/ "Art-Verse")
 
-### Note to self
+<hr>
+
+#### Note to self
 
 When working on the app again in the future, the path in BACKEND_URL.jsx file needs to be changed to "http://localhost:5005" to run locally and then changed back to the current path for deployment.
