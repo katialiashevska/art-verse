@@ -16,6 +16,7 @@ function About({ onClose }) {
                 />
                 <h1>About Art-Verse</h1>
             </div>
+
             <p id="about-text">
                 Hello! I'm Katia and I created this full-stack app during my Ironhack bootcamp in
                 2023. I was inspired by the incredible{" "}

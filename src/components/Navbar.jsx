@@ -6,7 +6,7 @@ import "../styles/navbar.css"
 import logo from "../assets/logo.svg"
 
 function Navbar() {
-    const { isLoggedIn, user } = useContext(AuthContext)
+    const { isLoggedIn } = useContext(AuthContext)
 
     // State to manage whether the "About" overlay is open or not
     const [aboutOpen, setAboutOpen] = useState(false)

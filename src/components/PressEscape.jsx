@@ -8,7 +8,6 @@ export function PressEscape(onEscape) {
                 onEscape()
             }
         }
-        // Add the event listener when the component mounts
         document.addEventListener("keydown", handleKeyPress)
         // Remove the event listener when the component unmounts
         return () => {

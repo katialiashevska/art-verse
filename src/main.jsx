@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom"
 import { AuthProviderWrapper } from "./context/auth.context"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+    // Commented out the StrictMode because it was duplicating all my artworks on homepage
     // <React.StrictMode>
     <Router>
         <AuthProviderWrapper>

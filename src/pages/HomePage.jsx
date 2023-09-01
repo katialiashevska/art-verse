@@ -16,17 +16,12 @@ function HomePage() {
     const [isLoadingData, setIsLoadingData] = useState(false)
     const [showToast, setShowToast] = useState(false)
 
+    // Access user authentication state from context to check logged-in users
     const { isLoggedIn, user } = useContext(AuthContext)
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoadingPage(false)
-        }, 7000)
-    }, [])
-
+    // Function to fetch artwork data from the external API
     const fetchData = () => {
         setIsLoadingData(true)
-
         axios
             .get(`https://api.artic.edu/api/v1/artworks/search?q=modern&limit=100&page=${page}`)
             .then(response => {
@@ -42,7 +37,7 @@ function HomePage() {
 
     useEffect(() => {
         fetchData()
-        // Check if it's the user's first time logging in
+        // Show a toast message when a user logs in for the first time
         const firstTimeLoggedIn = localStorage.getItem("firstTimeLoggedIn")
         if (isLoggedIn && firstTimeLoggedIn === "true") {
             setShowToast(true)
@@ -50,6 +45,7 @@ function HomePage() {
         }
     }, [isLoggedIn])
 
+    // Function to handle infinite scrolling by fetching more data when reaching the end of the page
     const handleScroll = () => {
         if (
             window.innerHeight + document.documentElement.scrollTop !==
@@ -62,18 +58,23 @@ function HomePage() {
         fetchData()
     }
 
+    // Add or remove the scroll event listener based on loading state and artworks length
     useEffect(() => {
-        // Add or remove scroll event listener based on isLoadingData and artworks length
         if (!isLoadingData && artworks.length > 0) {
             window.addEventListener("scroll", handleScroll)
         } else {
             window.removeEventListener("scroll", handleScroll)
         }
-
         return () => {
             window.removeEventListener("scroll", handleScroll)
         }
     }, [isLoadingData, artworks])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoadingPage(false)
+        }, 7000)
+    }, [])
 
     return (
         artworks.length > 0 && (
@@ -91,9 +92,9 @@ function HomePage() {
                         {artworks.map((artwork, index) => (
                             <EachArtwork
                                 key={artwork.id}
+                                artworks={artworks}
                                 artwork={artwork}
                                 index={index}
-                                artworks={artworks}
                             />
                         ))}
                     </div>

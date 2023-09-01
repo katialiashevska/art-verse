@@ -17,13 +17,16 @@ function FavouritesPage() {
     const [showRemoveToast, setShowRemoveToast] = useState(false)
     // State to manage selected artwork for modal
     const [selectedArtwork, setSelectedArtwork] = useState(null)
+    // State to manage adding and updating notes on artworks
     const [note, setNote] = useState("")
 
     const handleNote = e => setNote(e.target.value)
 
+    // Access user authentication state and token from context to access the database
     const { user, logOutUser } = useContext(AuthContext)
     const authToken = localStorage.getItem("authToken")
 
+    // Fetch favourite artworks when the component mounts
     useEffect(() => {
         axios
             .get(API_URL, {
@@ -32,6 +35,7 @@ function FavouritesPage() {
                 },
             })
             .then(response => {
+                // Add an index to each artwork for arrow navigation in modal
                 const artworksWithIndex = response.data.map((artwork, index) => ({
                     ...artwork,
                     index: index,
@@ -52,8 +56,8 @@ function FavouritesPage() {
             .catch(error => console.error(error.message))
     }
 
-    // Function to update state after a deletion of an artwork
-    const handleDeleteArtwork = (artworkId) => {
+    // Function to update state after deleting an artwork
+    const handleDeleteArtwork = artworkId => {
         setFavouriteArtworks(prevArtworks =>
             prevArtworks.filter(artwork => artwork.id !== artworkId)
         )
@@ -63,7 +67,6 @@ function FavouritesPage() {
         }, 3000)
     }
 
-    // Functions to open/close the modal for artwork details
     const openModal = artwork => {
         setSelectedArtwork(artwork)
     }
@@ -300,11 +303,11 @@ function FavouritesPage() {
 
                 {selectedArtwork && (
                     <FavouriteDetails
+                        favouriteArtworks={favouriteArtworks}
                         artwork={selectedArtwork}
+                        index={selectedArtwork.index}
                         onClose={closeModal}
                         onDelete={handleDeleteArtwork}
-                        favouriteArtworks={favouriteArtworks}
-                        index={selectedArtwork.index}
                     />
                 )}
             </div>

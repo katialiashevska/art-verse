@@ -11,7 +11,7 @@ import "../styles/toast.css"
 import plus from "../assets/plus.svg"
 import minus from "../assets/minus.svg"
 
-function EachArtwork({ artwork, index, artworks }) {
+function EachArtwork({ artworks, artwork, index }) {
     // State to hold detailed artwork information
     const [eachArtwork, setEachArtwork] = useState(null)
     // State to manage modal display
@@ -20,15 +20,40 @@ function EachArtwork({ artwork, index, artworks }) {
     const [showAddToast, setShowAddToast] = useState(false)
     // State to manage "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    // State to track if the artwork's image is valid to display
+    const [isValidImage, setIsValidImage] = useState(false)
     // State to track artwork's favourite status
     const [isFavourite, setIsFavourite] = useState(false)
-    const [isValidImage, setIsValidImage] = useState(false)
 
     const { isLoggedIn } = useContext(AuthContext)
 
     const tooltip = document.querySelectorAll(".tooltip")
     const allArtworks = [...document.querySelectorAll(".each-artwork")]
 
+    // Function to handle tooltip position on the page
+    const handleTooltip = e => {
+        for (let i = 0; i <= tooltip.length; i++) {
+            const tooltipWidth = tooltip[i]?.offsetWidth
+            const pageWidth = window.innerWidth - 48
+
+            let leftPosition = e.pageX + 30
+            if (leftPosition + tooltipWidth > pageWidth) {
+                leftPosition = e.pageX - tooltipWidth - 70
+            }
+
+            tooltip[i].style.left = leftPosition + "px"
+            tooltip[i].style.top = e.pageY + "px"
+        }
+    }
+
+    // Attach the handleTooltip function to mousemove event
+    useEffect(() => {
+        document.addEventListener("mousemove", handleTooltip, false)
+        // Remove the event listener when the component unmounts
+        return () => document.removeEventListener("mousemove", handleTooltip)
+    })
+
+    // Check if the artwork has a valid image
     useEffect(() => {
         if (eachArtwork) {
             fetch(`https://www.artic.edu/iiif/2/${eachArtwork.image_id}/full/843,/0/default.jpg`)
@@ -41,6 +66,7 @@ function EachArtwork({ artwork, index, artworks }) {
         }
     }, [eachArtwork])
 
+    // Fetch the user's favourites and check if the artwork is among them
     useEffect(() => {
         const authToken = localStorage.getItem("authToken")
         axios
@@ -58,7 +84,7 @@ function EachArtwork({ artwork, index, artworks }) {
             .catch(error => console.error(error.message))
     }, [eachArtwork])
 
-    // Effect to fetch detailed artwork information
+    // Fetch detailed artwork information
     useEffect(() => {
         axios
             .get(artwork.api_link)
@@ -103,28 +129,6 @@ function EachArtwork({ artwork, index, artworks }) {
         }
     }
 
-    // Function to handle tooltip position on the page
-    const handleTooltip = e => {
-        for (let i = 0; i <= tooltip.length; i++) {
-            const tooltipWidth = tooltip[i]?.offsetWidth
-            const pageWidth = window.innerWidth - 48
-
-            let leftPosition = e.pageX + 30
-            if (leftPosition + tooltipWidth > pageWidth) {
-                leftPosition = e.pageX - tooltipWidth - 70
-            }
-
-            tooltip[i].style.left = leftPosition + "px"
-            tooltip[i].style.top = e.pageY + "px"
-        }
-    }
-
-    // Attach the handleTooltip function to mousemove event & unmount
-    useEffect(() => {
-        document.addEventListener("mousemove", handleTooltip, false)
-        return () => document.removeEventListener("mousemove", handleTooltip)
-    })
-
     // Effect to handle the fact that the cursor needs to point to each artwork on homepage
     // but also stop pointing when the details modal is open
     useEffect(() => {
@@ -167,10 +171,10 @@ function EachArtwork({ artwork, index, artworks }) {
                 </div>
                 {modalOpen && (
                     <ArtworkDetails
-                        artwork={eachArtwork}
-                        onClose={closeModal}
-                        index={index}
                         artworks={artworks}
+                        artwork={eachArtwork}
+                        index={index}
+                        onClose={closeModal}
                     />
                 )}
             </article>

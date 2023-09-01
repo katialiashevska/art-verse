@@ -6,7 +6,7 @@ import { AuthContext } from "../context/auth.context"
 import "../styles/login-signup.css"
 import logo from "../assets/logo.svg"
 
-function LoginPage(props) {
+function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
@@ -22,13 +22,13 @@ function LoginPage(props) {
         e.preventDefault()
         const requestBody = { email, password }
 
+        // Send a POST request to the backend API for user login
         axios
             .post(`${BACKEND_URL}/auth/login`, requestBody)
             .then(response => {
                 storeToken(response.data.authToken)
                 localStorage.setItem("firstTimeLoggedIn", "true")
-                // Verify the token by sending a request
-                // to the server's JWT validation endpoint.
+                // Verify the token by sending a request to the server's JWT validation endpoint
                 authenticateUser()
                 navigate("/")
             })

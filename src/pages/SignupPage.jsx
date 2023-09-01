@@ -7,7 +7,7 @@ import "../styles/login-signup.css"
 import logo from "../assets/logo.svg"
 import check from "../assets/check.svg"
 
-function SignupPage(props) {
+function SignupPage() {
     const [input, setInput] = useState({
         name: "",
         email: "",
@@ -16,12 +16,12 @@ function SignupPage(props) {
     })
     const [globalErrorMessage, setGlobalErrorMessage] = useState("")
     const [inlineErrorMessage, setInlineErrorMessage] = useState("")
-
     const [isPasswordValid, setIsPasswordValid] = useState(false)
     const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
 
     const navigate = useNavigate()
 
+    // Access the authentication context for login
     const { storeToken, authenticateUser } = useContext(AuthContext)
 
     const onInputChange = e => {
@@ -33,6 +33,7 @@ function SignupPage(props) {
         validateInput(e)
     }
 
+    // Function to validate user input and provide error messages
     const validateInput = e => {
         let { name, value } = e.target
         setInlineErrorMessage(prev => {
@@ -80,6 +81,7 @@ function SignupPage(props) {
         e.preventDefault()
         const requestBody = { ...input }
 
+        // Send a POST request to the backend API for user registration
         axios
             .post(`${BACKEND_URL}/auth/signup`, requestBody)
             .then(() => {

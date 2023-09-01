@@ -11,17 +11,20 @@ import arrowPrevious from "../assets/arrow-previous.svg"
 import arrowNext from "../assets/arrow-next.svg"
 
 // Props:
-// - artwork: the favourite artwork object to display
+// - favouriteArtworks: all favourite artworks
+// - artwork: favourite artwork object to display
+// - index: index of artwork
 // - onClose: function to close the modal
 // - onDelete: function to handle deletion from favourites
-function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index }) {
-    // State to track if the artwork is a favourite
+function FavouriteDetails({ favouriteArtworks, artwork, index, onClose, onDelete }) {
     const [isFavourite, setIsFavourite] = useState(false)
     // State to manage "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    // States to manage arrow navigation display
     const [currentIndex, setCurrentIndex] = useState(index)
     const [currentArtwork, setCurrentArtwork] = useState(artwork)
 
+    // Get the authentication token to access the database
     const authToken = localStorage.getItem("authToken")
 
     PressEscape(onClose)
@@ -45,6 +48,7 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
         setCurrentIndex(nextIndex)
         const nextArtwork = favouriteArtworks[nextIndex]
         setCurrentArtwork(nextArtwork)
+        // Load the next artwork's info to display without a delay when next button is clicked
         axios
             .get(`${API_URL}/${favouriteArtworks[nextIndex].id}`, {
                 headers: {
@@ -62,6 +66,7 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
         setCurrentIndex(prevIndex)
         const prevArtwork = favouriteArtworks[prevIndex]
         setCurrentArtwork(prevArtwork)
+        // Load the previous artwork's info to display without a delay when previous button is clicked
         axios
             .get(`${API_URL}/${favouriteArtworks[prevIndex].id}`, {
                 headers: {
@@ -82,9 +87,7 @@ function FavouriteDetails({ artwork, onClose, onDelete, favouriteArtworks, index
                 handleNextClick()
             }
         }
-
         window.addEventListener("keydown", handleKeyDown)
-
         // Remove the event listener when the component unmounts
         return () => {
             window.removeEventListener("keydown", handleKeyDown)

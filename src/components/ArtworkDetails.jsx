@@ -13,13 +13,19 @@ import exit from "../assets/exit.svg"
 import arrowPrevious from "../assets/arrow-previous.svg"
 import arrowNext from "../assets/arrow-next.svg"
 
-function ArtworkDetails({ artwork, onClose, index, artworks }) {
-    // State to track whether the artwork is in favourites or not
+// Props:
+// - artworks: the list of all artworks
+// - artwork: the current artwork to display
+// - index: the index of artwork
+// - onClose: function to close the modal
+function ArtworkDetails({ artworks, artwork, index, onClose }) {
+    // State to track whether the artwork is a favourite
     const [isFavourite, setIsFavourite] = useState(false)
     // State to manage the display of "Added to favourites" toast
     const [showAddToast, setShowAddToast] = useState(false)
     // State to manage the display of "Removed from favourites" toast
     const [showRemoveToast, setShowRemoveToast] = useState(false)
+    // States to manage arrow navigation display
     const [currentIndex, setCurrentIndex] = useState(index)
     const [currentArtwork, setCurrentArtwork] = useState(artworks[index])
 
@@ -28,7 +34,6 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
     PressEscape(onClose)
 
     // Fetch data from API to determine if the artwork is in favourites
-    // when the artwork prop changes
     useEffect(() => {
         const authToken = localStorage.getItem("authToken")
 
@@ -49,8 +54,8 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
             .catch(error => console.error(error.message))
     }, [currentArtwork])
 
+    // Fetch artwork details for the currently displayed artwork
     useEffect(() => {
-        // Fetch artwork details for the currently displayed artwork
         axios
             .get(artworks[currentIndex].api_link)
             .then(response => {
@@ -89,9 +94,7 @@ function ArtworkDetails({ artwork, onClose, index, artworks }) {
                 handleNextClick()
             }
         }
-
         window.addEventListener("keydown", handleKeyDown)
-
         // Remove the event listener when the component unmounts
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
